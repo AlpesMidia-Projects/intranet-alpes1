@@ -1,0 +1,96 @@
+/* css/login.css */
+
+body.login {
+  margin: 0;
+  font-family: Arial, sans-serif;
+  background: url('../imagens/bg_alpes_logo.png') no-repeat center center/cover;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  height: 100vh;
+}
+
+.login-box {
+  background: rgba(255, 255, 255, 0.95);
+  padding: 30px;
+  border-radius: 10px;
+  text-align: center;
+  box-shadow: 0 0 20px rgba(0,0,0,0.4);
+  width: 90%;
+  max-width: 400px; 
+}
+
+.login-box__logo {
+  max-width: 200px;
+  margin-bottom: 20px;
+}
+
+.login-box h2 {
+    margin-bottom: 25px;
+    font-size: 1.5em;
+    color: #333;
+}
+
+.login-box form {
+  margin-bottom: 20px;
+  text-align: left; 
+}
+
+.login-box label {
+  display: block;
+  margin-bottom: 8px;
+  font-weight: bold;
+  color: #555;
+}
+
+.login-box input {
+  box-sizing: border-box; 
+  width: 100%;
+  padding: 12px;
+  margin-bottom: 20px;
+  border: 1px solid #ccc;
+  border-radius: 5px;
+}
+
+.login-box__botao-container {
+  text-align: center;
+}
+
+.login-box__botao {
+  background-color: #4285F4;
+  color: white;
+  border: none;
+  padding: 12px 20px;
+  font-size: 16px;
+  border-radius: 5px;
+  cursor: pointer;
+  display: inline-flex; 
+  align-items: center;
+  justify-content: center;
+  margin: 5px;
+  text-decoration: none; 
+  min-width: 180px; 
+}
+
+.login-box__botao img {
+  width: 20px;
+  height: 20px;
+  margin-right: 10px;
+  vertical-align: middle;
+}
+
+.login-box__botao:hover {
+  background-color: #3f7ae5;
+}
+
+.login-box__botao:active {
+  background-color: #2f5bb7;
+}
+
+
+form + .login-box__botao-container .login-box__botao:first-child {
+    background-color: #002d62; 
+}
+form + .login-box__botao-container .login-box__botao:first-child:hover {
+    background-color: #001f54;
+}

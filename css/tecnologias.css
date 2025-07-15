@@ -1,0 +1,335 @@
+/* css/tecnologias.css - VERSÃO FINAL E CORRIGIDA */
+
+/* ================================== */
+/* ESTILOS DO ACCORDION               */
+/* ================================== */
+.accordion-container {
+  max-width: 900px;
+  margin: 40px auto;
+}
+
+.accordion-item {
+  margin-bottom: 15px;
+  border-radius: 8px;
+  box-shadow: 0 4px 15px rgba(0,0,0,0.1);
+  overflow: hidden;
+}
+
+.accordion-header {
+  width: 100%;
+  padding: 40px 30px;
+  border: none;
+  text-align: left;
+  cursor: pointer;
+  color: white;
+  transition: background-color 0.4s ease;
+  position: relative;
+  background-size: cover;
+  background-position: center;
+}
+
+.accordion-header::after {
+  content: '+';
+  font-size: 2em;
+  color: white;
+  position: absolute;
+  right: 30px;
+  top: 50%;
+  transform: translateY(-50%);
+  transition: transform 0.3s ease;
+}
+
+.accordion-header.active::after {
+  content: "–";
+}
+
+.header-title {
+  display: block;
+  font-size: 2em;
+  font-weight: bold;
+  text-shadow: 2px 2px 4px rgba(0,0,0,0.5);
+}
+
+.header-subtitle {
+  font-size: 1em;
+  opacity: 0.9;
+  text-shadow: 1px 1px 2px rgba(0,0,0,0.5);
+}
+
+/* Backdrops personalizados para cada ferramenta */
+.chatgpt-bg {
+  background-image: linear-gradient(rgba(0,0,0,0.5), rgba(0,0,0,0.5)), url('../imagens/backdrop-chatgpt.jpg');
+}
+
+.elevenlabs-bg {
+  background-image: linear-gradient(rgba(0,0,0,0.5), rgba(0,0,0,0.5)), url('../imagens/backdrop-elevenlabs.jpg');
+}
+
+.accordion-panel {
+  background-color: white;
+  max-height: 0;
+  overflow: hidden;
+  transition: max-height 0.4s ease-out, padding 0.4s ease-out;
+  padding: 0 30px;
+}
+
+.ia-tool-card {
+  padding: 30px 0;
+  box-shadow: none;
+}
+
+/* ================================== */
+/* CSS PARA A INTERFACE DE CHAT       */
+/* ================================== */
+.chat-container {
+  display: flex;
+  flex-direction: column;
+  height: 600px;
+  border: 1px solid #e0e0e0;
+  border-radius: 8px;
+  overflow: hidden;
+}
+.chat-messages {
+  flex-grow: 1;
+  padding: 20px;
+  overflow-y: auto;
+  display: flex;
+  flex-direction: column;
+  gap: 15px;
+}
+.message {
+  padding: 10px 15px;
+  border-radius: 18px;
+  max-width: 75%;
+  line-height: 1.5;
+}
+.message p {
+  margin: 0;
+}
+.message.assistant {
+  background-color: #f1f0f0;
+  color: #333;
+  align-self: flex-start;
+  border-bottom-left-radius: 4px;
+}
+.message.user {
+  background-color: #007bff;
+  color: white;
+  align-self: flex-end;
+  border-bottom-right-radius: 4px;
+}
+.chat-input-form {
+  display: flex;
+  border-top: 1px solid #e0e0e0;
+  padding: 10px;
+}
+.chat-input-form input {
+  flex-grow: 1;
+  border: none;
+  padding: 10px;
+  font-size: 1rem;
+}
+.chat-input-form input:focus {
+  outline: none;
+}
+.chat-input-form button {
+  background-color: #007bff;
+  color: white;
+  border: none;
+  padding: 0 20px;
+  border-radius: 5px;
+  cursor: pointer;
+}
+
+/* ======================================================= */
+/* CSS PARA O LAYOUT AJUSTADO DO ELEVENLABS (VERSÃO FINAL)  */
+/* ======================================================= */
+
+.audio-generation-panel {
+  display: flex;
+  flex-direction: column; /* Garante o layout vertical de coluna única */
+  gap: 15px; /* Espaço entre os elementos */
+}
+
+/* Container para os controles que ficam no topo */
+.audio-controls-top {
+  margin-bottom: 10px;
+}
+
+/* Estilo para cada item de configuração */
+.setting-item label {
+  display: block;
+  margin-bottom: 5px;
+  font-weight: bold;
+  font-size: 0.9em;
+  color: #333;
+}
+
+.setting-item select {
+  width: 100%;
+  padding: 10px;
+  border-radius: 5px;
+  border: 1px solid #ccc;
+  font-size: 1rem;
+}
+
+.ia-tool-card textarea {
+    width: 100%;
+    padding: 15px;
+    border-radius: 5px;
+    border: 1px solid #ccc;
+    font-size: 1rem;
+    box-sizing: border-box;
+}
+
+/* Container dos controles de baixo (contador e botão) */
+.generation-controls {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-top: 10px;
+}
+
+.char-counter {
+  font-size: 0.9em;
+  color: #666;
+}
+
+#gerar-audio-btn:disabled {
+  background-color: #a0a0a0;
+  cursor: not-allowed;
+}
+
+#audio-resultado-container {
+  margin-top: 20px;
+  min-height: 60px;
+}
+
+#audio-resultado-container audio {
+    width: 100%;
+    border-radius: 50px;
+}
+
+/* ================================== */
+/* CSS PARA O NOVO BOTÃO DE GERAR     */
+/* ================================== */
+
+#gerar-audio-btn { /* Podemos usar o ID diretamente */
+  background-color: #007bff;
+  color: white;
+  border: none;
+  padding: 12px 25px;
+  font-size: 1rem;
+  font-weight: bold;
+  border-radius: 5px;
+  cursor: pointer;
+  transition: background-color 0.2s ease;
+}
+
+#gerar-audio-btn:hover {
+  background-color: #0056b3;
+}
+
+#gerar-audio-btn:disabled {
+  background-color: #a0a0a0;
+  cursor: not-allowed;
+}
+
+/* Estilos para o seletor de voz com botão de prévia */
+.voice-selector-wrapper {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+}
+
+.voice-selector-wrapper select {
+  flex-grow: 1; /* Faz o seletor ocupar o espaço disponível */
+}
+
+.preview-button {
+  background-color: #6c757d;
+  color: white;
+  border: none;
+  padding: 8px 15px; /* Padding para botões retangulares */
+  border-radius: 5px; /* Bordas levemente arredondadas */
+  cursor: pointer;
+  font-size: 0.9em; /* Tamanho da fonte do texto */
+  font-weight: bold;
+  transition: background-color 0.2s;
+}
+
+.preview-button:hover {
+  background-color: #5a6268;
+}
+
+.preview-button svg {
+  margin-left: 2px;
+}
+
+/* Spinner pequeno para o botão de gerar */
+.loading-spinner-small {
+  border: 3px solid #f3f3f3;
+  border-top: 3px solid #007bff;
+  border-radius: 50%;
+  width: 20px;
+  height: 20px;
+  animation: spin 1s linear infinite;
+}
+
+.preview-player {
+  margin-top: 10px;
+  min-height: 40px; /* Garante que o layout não "pule" quando o player aparecer */
+}
+
+.preview-player audio {
+  width: 100%;
+  height: 40px;
+}
+
+/* ================================== */
+/* CSS PARA O HISTÓRICO DE ÁUDIOS     */
+/* ================================== */
+
+.history-section {
+  margin-top: 40px;
+  padding-top: 20px;
+  border-top: 1px solid #eee;
+}
+
+.history-section h4 {
+  margin-bottom: 20px;
+  color: #333;
+}
+
+#audio-history-list {
+  max-height: 400px; /* Altura máxima, com barra de rolagem se passar */
+  overflow-y: auto;
+  display: flex;
+  flex-direction: column;
+  gap: 15px; /* Espaço entre os itens do histórico */
+}
+
+.history-item {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+  background-color: #f8f9fa;
+  padding: 15px;
+  border-radius: 5px;
+  border-left: 4px solid #007bff;
+}
+
+.history-item-text {
+  font-style: italic;
+  color: #555;
+}
+
+.history-item-details {
+  font-size: 0.8em;
+  color: #777;
+}
+
+.history-item audio {
+  width: 100%;
+  height: 40px;
+}

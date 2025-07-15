@@ -1,0 +1,88 @@
+/* dashboard.css */
+.dashboard_hero {
+  color: white;
+  padding: 40px 20px;
+  text-align: center;
+}
+
+.dashboard_hero h2 {
+  font-size: 2rem;
+  margin-bottom: 10px;
+}
+
+.dashboard_hero p {
+  font-size: 1.2rem;
+}
+
+.dashboard_image {
+  max-width: 300px;
+  margin-top: 20px;
+}
+
+.dashboard_main {
+  display: flex;
+  gap: 40px;
+  padding: 40px 20px;
+  flex-wrap: wrap;
+}
+
+.dashboard_calendar,
+.dashboard_poll {
+  flex: 1;
+  min-width: 300px;
+}
+
+.dashboard_poll form {
+  background: #fff;
+  padding: 20px;
+  border-radius: 8px;
+  box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+}
+
+.dashboard_poll h3,
+.dashboard_calendar h3 {
+  margin-bottom: 16px;
+  color: #002d62;
+}
+
+
+.dashboard_header{
+  color: white;
+  padding: 40px 20px;
+  text-align: center;
+
+}
+
+.telainicio {
+  background-image: url('../imagens/wallpaper-alpes-2025b.jpg');
+  height: 100vh;
+  background-size: cover;
+  background-position: center center;
+  background-repeat: no-repeat;
+  background-color: #0d2c54; 
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: flex-start;
+  position: relative; 
+  margin: 0;
+  padding: 0;
+  padding-top: 20vh;
+}
+
+/* Estilos para a lista de eventos do calendário */
+.lista-eventos-calendario {
+  list-style: none;
+  padding: 0;
+  margin: 0;
+}
+
+.lista-eventos-calendario li {
+  padding: 8px 0;
+  border-bottom: 1px solid #eee;
+  font-size: 0.95em;
+}
+
+.lista-eventos-calendario li:last-child {
+  border-bottom: none;
+}

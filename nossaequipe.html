@@ -1,0 +1,46 @@
+<!DOCTYPE html>
+<html lang="pt-BR" class="scheme_original">
+<head>
+  <title>Nossa Equipe - Intranet Grupo Alpes</title>
+  <meta charset="UTF-8"/>
+  <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+
+<script type="module" src="/js/auth-guard.js"></script>
+
+  <link rel="stylesheet" href="css/main.css">
+  <link rel="stylesheet" href="css/equipe.css">
+</head>
+
+<body>
+  <div id="header-placeholder"></div>
+  <main class="container">
+    <div class="faixa-titulo">
+      <div class="faixa-container">
+        <h2>NOSSA EQUIPE</h2>
+      </div>
+    </div>
+    <div id="equipe-container" class="equipe-grid">
+      </div>
+  </main>
+  <div id="footer-placeholder"></div>
+
+  <script type="module">
+    // Importa as funções dos seus outros scripts
+    import { carregarFuncionarios } from './js/equipe.js';
+    // (Aqui você importaria funções do template-loader.js e script.js se eles também fossem módulos)
+
+    // Executa as funções depois que a página carregar
+    document.addEventListener('DOMContentLoaded', () => {
+      carregarFuncionarios();
+
+      // A lógica dos seus outros scripts (template-loader.js e script.js)
+      // pode ser chamada aqui também, ou você pode reestruturá-los como módulos.
+      // Por enquanto, vamos focar em fazer a equipe funcionar.
+    });
+  </script>
+
+  <script type="module" src="js/template-loader.js" defer></script>
+  <script src="js/script.js" defer></script> 
+
+</body>
+</html>

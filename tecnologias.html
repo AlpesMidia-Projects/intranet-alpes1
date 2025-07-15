@@ -1,0 +1,105 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <title>Ferramentas de IA - Intranet Grupo Alpes</title>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+
+  <script type="module" src="/js/auth-guard.js"></script>
+
+  <link rel="stylesheet" href="css/main.css">
+  <link rel="stylesheet" href="css/tecnologias.css"> </head>
+
+<body>
+
+  <div id="header-placeholder"></div>
+
+<main class="container">
+  <div class="faixa-titulo">
+    <div class="faixa-container">
+      <h2>FERRAMENTAS DE IA</h2>
+    </div>
+  </div>
+
+  <div class="accordion-container">
+
+    <div class="accordion-item">
+      <button class="accordion-header chatgpt-bg">
+        <span class="header-title">Assistente de Texto</span>
+        <span class="header-subtitle">Powered by ChatGPT</span>
+      </button>
+      <div class="accordion-panel">
+        <div class="ia-tool-card">
+          <div class="chat-container">
+            <div class="chat-messages" id="chat-messages">
+              <div class="message assistant">
+                <p>Olá! Sou o assistente de texto da Intranet Alpes. Como posso ajudar hoje?</p>
+              </div>
+            </div>
+            <form class="chat-input-form" id="chat-form">
+              <input type="text" id="chat-input" placeholder="Digite sua mensagem..." autocomplete="off">
+              <button type="submit">Enviar</button>
+            </form>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div class="accordion-item">
+      <button class="accordion-header elevenlabs-bg">
+        <span class="header-title">Gerador de Áudio</span>
+        <span class="header-subtitle">Powered by ElevenLabs</span>
+      </button>
+      <div class="accordion-panel">
+        <div class="ia-tool-card">
+          <div class="audio-generation-panel">
+            <div class="audio-controls-top">
+              <div class="setting-item">
+                <label for="voz-select">Voz</label>
+                <select name="voz" id="voz-select">
+                  <option value="O3UPrbbmFUOQ290xcGUv">Dhyogo azevedo</option>
+                  <option value="ODq5zmih8GrVes37Dizd">Daniel (Profissional, Locutor)</option>
+                  <option value="jsCqWAovK2LkecY7zXl4">Gigi (Casual, Conversacional)</option>
+                  <option value="wViXBP_i9ESryB11t9sH">James (Calmo, Narrador)</option>
+                </select>
+                <button id="preview-voice-btn" class="preview-button" title="Ouvir prévia da voz">
+                  Ver Prévia
+                </button>
+              </div>
+              <div class="voice-selector-wrapper">
+                </div>
+              <div id="preview-player-container" class="preview-player"></div>
+            </div>
+
+            <div class="audio-main">
+              <textarea id="texto-para-audio-input" rows="8" placeholder="Digite ou cole o texto que deseja converter em áudio..."></textarea>
+              
+              <div class="generation-controls">
+                <div id="char-counter" class="char-counter">0 / 2500</div>
+                <button id="gerar-audio-btn">Gerar</button>
+              </div>
+
+              <div id="audio-resultado-container">
+              </div>
+
+              <div class="history-section">
+                <h4>Seu Histórico</h4>
+                <div id="audio-history-list">
+                <p>Carregando histórico...</p>
+                </div>
+              </div>
+            </div>
+          </div>
+          </div>
+      </div>
+    </div>
+  </div>
+</main>
+
+  <div id="footer-placeholder"></div>
+
+  <script type="module" src="js/template-loader.js" defer></script>
+  <script src="js/tecnologias.js" defer></script> <script src="js/script.js" defer></script> 
+
+</body>
+</html>

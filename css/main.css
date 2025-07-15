@@ -1,0 +1,31 @@
+/* ==============================================
+   Arquivo CSS Principal - Intranet Grupo Alpes
+   ==============================================
+
+/* Importação dos estilos base e de layout */
+@import url('base.css');
+@import url('layout.css');
+@import url('clientes.css');
+
+/* Importação dos componentes estruturais da página */
+@import url('header.css');
+@import url('nav.css');
+@import url('footer.css');
+
+/* Importação dos componentes de conteúdo específico */
+@import url('dashboard.css');
+@import url('aniversariantes.css');
+@import url('projetos.css');
+@import url('chat.css');
+@import url('popup.css');
+
+/* Importação dos estilos da página de login */
+@import url('login.css'); 
+
+/* Importação dos estilos da página de Equipe*/
+@import url('equipe.css');
+/* Importação dos estilos da página de Tecnologias*/
+@import url('tecnologias.css');
+
+
+

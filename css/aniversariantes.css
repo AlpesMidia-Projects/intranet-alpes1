@@ -1,0 +1,102 @@
+/* ======================================================= */
+/* ESTILO CARROSSEL DE ANIVERSARIANTES (NOVO DESIGN)       */
+/* ======================================================= */
+
+/* A seção escura que serve de fundo para o carrossel */
+.section_aniversariantes_moderna {
+  position: relative;
+  /* Você pode usar um gradiente ou uma imagem de fundo aqui */
+  background: #1a1a2e; 
+  padding: 60px 0;
+  overflow: hidden;
+}
+
+/* O texto "PARABÉNS" que fica no fundo */
+.background-text {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  font-size: 10vw;
+  font-weight: 900;
+  color: rgba(255, 255, 255, 0.05);
+  white-space: nowrap;
+  user-select: none;
+  z-index: 0;
+}
+
+/* Container principal do Swiper */
+.aniversariantes-swiper {
+  width: 100%;
+  padding: 40px 0;
+  position: relative;
+  z-index: 1;
+}
+
+/* O "slide" que segura o nosso card. Este é um ajuste crucial. */
+.swiper-slide {
+  /* A largura se ajusta ao conteúdo do card, não tenta preencher a tela */
+  width: auto;
+}
+
+/* O card novo, com fundo branco */
+.aniversariante-card-novo {
+  background-color: #ffffff;
+  border-radius: 12px;
+  box-shadow: 0 5px 20px rgba(0, 0, 0, 0.15);
+  text-align: center;
+  padding: 25px;
+  width: 280px; /* Largura fixa do card */
+  transition: transform 0.3s ease;
+}
+
+.aniversariante-card-novo:hover {
+  transform: scale(1.05);
+}
+
+/* O container circular da foto */
+.foto-container {
+  width: 130px;
+  height: 130px;
+  border-radius: 50%;
+  overflow: hidden;
+  margin: 0 auto 15px;
+  border: 5px solid #e9ecef;
+}
+
+.foto-container img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+
+/* O container das informações de texto */
+.info-container {
+  padding: 0 10px;
+}
+
+.nome-aniversariante {
+  font-size: 1.3em;
+  font-weight: 700;
+  color: #343a40;
+  margin: 0 0 5px 0;
+}
+
+.cargo-aniversariante {
+  font-size: 0.9em;
+  color: #6c757d;
+  margin: 0 0 10px 0;
+  min-height: 1.2em;
+}
+
+.data-aniversario {
+  font-size: 1.1em;
+  color: #007bff;
+  font-weight: bold;
+}
+
+/* Estilo das setas de navegação do Swiper */
+.swiper-button-next, .swiper-button-prev {
+  color: #ffffff;
+  --swiper-navigation-size: 30px;
+}

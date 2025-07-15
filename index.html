@@ -1,0 +1,75 @@
+<!DOCTYPE html>
+<html lang="pt-BR" class="scheme_original">
+<head>
+  <title>Intranet Grupo Alpes</title>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+  <link rel="stylesheet" href="css/main.css">
+  <link rel="stylesheet" href="css/aniversariantes.css">
+  <link rel="stylesheet" href="https://unpkg.com/swiper/swiper-bundle.min.css"/>
+  <script src='https://cdn.jsdelivr.net/npm/fullcalendar@6.1.15/index.global.min.js'></script>
+</head>
+
+<body>
+
+  <div id="header-placeholder"></div>
+  
+  <div class="telainicio">
+      <section class="section_notificacoes">
+          <div class="content_wrap dashboard_hero">
+              <div class="dashboard_header"><h2>Bem-vindo à Intranet Grupo Alpes</h2></div>
+          </div>
+      </section>
+  </div>
+
+  <div class="faixa-titulo">
+      <iframe title="Meta" width="100%" height="370" src="https://app.powerbi.com/reportEmbed?reportId=560efa21-a152-43c2-9b87-25f432625f7b&autoAuth=true&ctid=293c3a58-e2e2-4115-aa6f-9321a3b0539f" frameborder="0" allowFullScreen="true"></iframe>
+  </div>
+
+  <section class="section_aniversariantes_moderna">
+      <div class="background-text">PARABÉNS</div>
+      <div class="swiper aniversariantes-swiper">
+          <div class="swiper-wrapper" id="aniversariantes-container"></div>
+          <div class="swiper-button-prev"></div>
+          <div class="swiper-button-next"></div>
+      </div>
+  </section>
+
+  <div class="faixa-titulo"><div class="faixa-container"><h2>AGENDA E ENQUETE</h2></div></div>
+  
+  <section class="section_agenda">
+      <div class="content_wrap dashboard_main">
+          <div class="dashboard_calendar">
+              <h3>📅 Meus Próximos Eventos</h3>
+              <div id="meu-calendario-container"><p>Carregando seu calendário...</p></div>
+          </div>
+          <div class="dashboard_poll">
+              <h3>📊 Enquete da Semana</h3>
+              <form><p>Qual área mais se beneficiaria de IA?</p><label><input type="radio" name="vote"> Comercial</label><br><label><input type="radio" name="vote"> Suporte</label><br><label><input type="radio" name="vote"> RH</label><br><br><button type="submit">Votar</button></form>
+          </div>
+      </div>
+  </section>
+
+  <div class="faixa-titulo"><div class="faixa-container"><h2>CHAT INTERNO E PROJETOS</h2></div></div>
+
+  <div class="container">
+      <div class="row">
+          <div class="col-md-6">
+              <section class="section_chat"><div class="content_wrap"><h3>💬 Chat Interno</h3><iframe src="https://chat.google.com/" width="100%" height="500" frameborder="0" style="border:1px solid #ccc; border-radius:8px;"></iframe></div></section>
+          </div>
+          <div class="col-md-6">
+              <section class="section_projetos"><h2>Projetos em Execução</h2><div id="projetos-container" class="projetos_grid"><p>Carregando projetos...</p></div></section>
+          </div>
+      </div> 
+  </div> 
+
+  <div class="container back"><img src="imagens/cliantes-alpes.png" alt="Logos de clientes"></div>
+  <div id="footer-placeholder"></div>
+  <div id="modal-placeholder"></div>
+
+  <script src="https://unpkg.com/swiper/swiper-bundle.min.js"></script>
+  
+  <script type="module" src="/js/template-loader.js"></script>
+  <script type="module" src="/js/index-page.js"></script> <script src="js/script.js" defer></script> 
+</body>
+</html>

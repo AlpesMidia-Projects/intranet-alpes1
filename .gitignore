@@ -1,0 +1,14 @@
+# Arquivos de Cache do Python
+__pycache__/
+*.pyc
+
+# Banco de Dados local
+*.sqlite3
+db.sqlite3
+
+# Arquivo de variáveis de ambiente (SEGREDO!)
+.env
+
+# Arquivos de sistema operacional
+.DS_Store
+Thumbs.db

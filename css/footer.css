@@ -1,0 +1,112 @@
+/* --- ESTILO DO NOVO RODAPÉ --- */
+
+.footer-redesenhado {
+  background-color: #0d2c54; /* Um azul escuro, ajuste se necessário */
+  color: #f0f4f8;
+  padding: 60px 20px 20px 20px; /* Mais espaço no topo */
+  text-align: center;
+}
+
+.footer-container {
+  max-width: 1200px;
+  margin: 0 auto; /* Centraliza o conteúdo */
+}
+
+.footer-titulo {
+  font-size: 1.8em;
+  color: #ffffff;
+  margin-bottom: 25px;
+  font-weight: 600;
+}
+
+/* Seção Sobre o Grupo */
+.sobre-grupo p {
+  max-width: 700px;
+  margin: 0 auto 30px auto;
+  line-height: 1.6;
+  color: #a9b4c2;
+}
+
+/* Container dos cards */
+.sedes-container {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(300px, 1fr)); /* Grid responsivo */
+  gap: 30px; /* Espaço entre os cards */
+  margin-top: 20px;
+}
+
+/* Estilo do Card Individual */
+.sede-card {
+  background-color: #174075; /* Um tom de azul pouco mais claro */
+  border-radius: 12px;
+  overflow: hidden; /* Garante que a imagem respeite as bordas arredondadas */
+  text-align: left;
+  box-shadow: 0 4px 15px rgba(0, 0, 0, 0.2);
+  transition: transform 0.3s ease, box-shadow 0.3s ease;
+}
+
+.sede-card:hover {
+  transform: translateY(-10px); /* Efeito de "levantar" o card */
+  box-shadow: 0 10px 25px rgba(0, 0, 0, 0.3);
+}
+
+.sede-card img {
+  width: 100%;
+  height: 180px; /* Altura da imagem */
+  object-fit: cover; /* Garante que a imagem cubra o espaço sem distorcer */
+}
+
+.sede-info {
+  padding: 25px;
+}
+
+.sede-info h3 {
+  margin: 0 0 10px 0;
+  font-size: 1.5em;
+  color: #ffffff;
+}
+
+.sede-info p {
+  margin: 0 0 15px 0;
+  color: #a9b4c2;
+  line-height: 1.5;
+}
+
+.sede-info a {
+  color: #4dabf7; /* Um azul claro para o link */
+  text-decoration: none;
+  font-weight: bold;
+}
+
+.sede-info a:hover {
+  text-decoration: underline;
+}
+
+/* Seção de Contato Geral */
+.contato-geral {
+  margin-top: 50px;
+}
+
+.contato-geral p {
+  color: #a9b4c2;
+  font-size: 1.1em;
+  line-height: 1.8;
+}
+
+/* Seção de Copyright */
+.footer-copyright {
+  border-top: 1px solid #174075;
+  margin-top: 40px;
+  padding-top: 20px;
+  font-size: 0.9em;
+}
+
+.footer-copyright p {
+  margin: 0;
+  color: #a9b4c2;
+}
+
+.footer-copyright a {
+  color: #4dabf7;
+  text-decoration: none;
+}
