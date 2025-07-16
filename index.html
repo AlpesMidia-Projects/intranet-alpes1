@@ -8,6 +8,8 @@
   <link rel="stylesheet" href="css/aniversariantes.css">
   <link rel="stylesheet" href="https://unpkg.com/swiper/swiper-bundle.min.css"/>
   <script src='https://cdn.jsdelivr.net/npm/fullcalendar@6.1.15/index.global.min.js'></script>
+  <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@300;700&display=swap" rel="stylesheet">
+  <script src="https://unpkg.com/embla-carousel/embla-carousel.umd.js"></script>
 </head>
 
 <body>
@@ -26,14 +28,23 @@
       <iframe title="Meta" width="100%" height="370" src="https://app.powerbi.com/reportEmbed?reportId=560efa21-a152-43c2-9b87-25f432625f7b&autoAuth=true&ctid=293c3a58-e2e2-4115-aa6f-9321a3b0539f" frameborder="0" allowFullScreen="true"></iframe>
   </div>
 
-  <section class="section_aniversariantes_moderna">
-      <div class="background-text">PARABÉNS</div>
-      <div class="swiper aniversariantes-swiper">
-          <div class="swiper-wrapper" id="aniversariantes-container"></div>
-          <div class="swiper-button-prev"></div>
-          <div class="swiper-button-next"></div>
-      </div>
-  </section>
+<section class="section_aniversariantes_moderna">
+    <div class="faixa-titulo"><div class="faixa-container"><h2>🎉 ANIVERSARIANTES DO MÊS 🎉</h2></div></div>
+        <div class="embla">
+            <div class="bg-parabens">
+            <li>PARABÉNS PARABÉNS</li>  
+            <li>PARABÉNS PARABÉNS</li>
+            <li>PARABÉNS PARABÉNS</li>
+            </div> 
+            <div class="embla__viewport">
+            <div class="embla__container" id="aniversariantes-container">
+            </div>
+            </div>
+            <button class="embla__prev">←</button>
+            <button class="embla__next">→</button>
+        </div>
+</section>
+
 
   <div class="faixa-titulo"><div class="faixa-container"><h2>AGENDA E ENQUETE</h2></div></div>
   
@@ -65,7 +76,27 @@
 
   <div class="container back"><img src="imagens/cliantes-alpes.png" alt="Logos de clientes"></div>
   <div id="footer-placeholder"></div>
-  <div id="modal-placeholder"></div>
+    <div id="modal-detalhes" class="modal">
+    <div class="modal-content">
+        <span class="close-button">&times;</span>
+        <h2 id="modal-titulo">Título do Projeto</h2>
+        <p id="modal-descricao">Descrição detalhada...</p>
+        
+        <div class="modal-progresso">
+        <h3>Progresso</h3>
+        <div class="progresso">
+            <div id="modal-barra-progresso" class="barra-progresso" style="width: 0%"></div>
+        </div>
+        <span id="modal-porcentagem">0%</span>
+        </div>
+
+        <div id="modal-tarefas">
+        <h3>Tarefas</h3>
+        <ul>
+        </ul>
+        </div>
+    </div>
+</div>
 
   <script src="https://unpkg.com/swiper/swiper-bundle.min.js"></script>
   

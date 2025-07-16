@@ -1,8 +1,3 @@
-/* projetos.css - VERSÃO FINAL E CORRIGIDA */
-
-/* ======================================================= */
-/* ESTILOS DOS CARDS DE PROJETOS                           */
-/* ======================================================= */
 
 .projetos_grid {
   display: grid;
@@ -185,3 +180,45 @@
   from { transform: translateY(-50px); opacity: 0; }
   to { transform: translateY(0); opacity: 1; }
 }
+
+.modal-content {
+    transition: transform 0.3s ease-out, opacity 0.3s ease;
+}
+.modal[style*="display: block"] .modal-content {
+    transform: translateY(0);
+    opacity: 1;
+}
+
+.modal {
+    backdrop-filter: blur(5px);
+}
+
+/* --- ADICIONE ISSO NO FINAL DO ARQUIVO --- */
+/* Estilos para o foco e acessibilidade */
+.close-button:focus {
+    outline: 2px solid #007bff;
+    outline-offset: 2px;
+    transform: scale(1.05);
+}
+
+.modal-content *:focus {
+    outline: none;
+    box-shadow: 0 0 0 3px rgba(0, 123, 255, 0.5);
+}
+
+/* Bloqueia scroll quando o modal está aberto */
+body.modal-open {
+    overflow: hidden;
+}
+
+/* Efeito visual para o botão de fechar */
+.close-button {
+    transition: all 0.2s ease;
+}
+
+.close-button:hover {
+    color: #ff0000;
+    transform: scale(1.1);
+}
+/* --- FIM DOS NOVOS ESTILOS --- */
+

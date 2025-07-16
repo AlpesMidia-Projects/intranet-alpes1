@@ -1,24 +1,20 @@
-// js/index-page.js - VERSÃO FINAL COMPLETA
-
-// Importa a conexão com o Supabase para ser usada em toda a página
 import { supabase } from '/js/supabaseClient.js';
 
-// --- FUNÇÃO PARA ATIVAR A LÓGICA DO MODAL DOS PROJETOS ---
-// Esta função será chamada DEPOIS que os cards de projeto forem criados
 function ativarLogicaModalProjetos() {
     const modal = document.getElementById('modal-detalhes');
-    if (!modal) return;
-
+    if (!modal) {
+        console.error("Modal não encontrado!");
+        return;
+    }
     const botoesDetalhes = document.querySelectorAll('.projeto-detalhes');
     const closeButton = modal.querySelector('.close-button');
-
     const modalTitulo = document.getElementById('modal-titulo');
     const modalDescricao = document.getElementById('modal-descricao');
     const modalBarraProgresso = document.getElementById('modal-barra-progresso');
     const modalPorcentagem = document.getElementById('modal-porcentagem');
     const modalTarefasLista = document.querySelector('#modal-tarefas ul');
 
-    botoesDetalhes.forEach(button => {
+botoesDetalhes.forEach(button => {
         button.addEventListener('click', function() {
             modalTitulo.textContent = this.dataset.titulo;
             modalDescricao.textContent = this.dataset.descricao;
@@ -34,51 +30,102 @@ function ativarLogicaModalProjetos() {
                     modalTarefasLista.appendChild(li);
                 }
             });
+
+            // NOVO CÓDIGO: Abre o modal e gerencia o foco
             modal.style.display = 'block';
+            document.body.classList.add('modal-open'); // Bloqueia scroll
+            closeButton.focus(); // Foca no botão de fechar
+
+            // Armazena o botão que abriu o modal (para devolver o foco depois)
+            modal.dataset.openedBy = this.id || this.textContent.trim();
         });
     });
-    
-    const fecharModal = () => modal.style.display = 'none';
-    if(closeButton) closeButton.addEventListener('click', fecharModal);
-    window.addEventListener('click', (event) => {
-        if (event.target === modal) {
-            fecharModal();
+
+    // NOVO CÓDIGO: Fecha o modal com Esc
+    document.addEventListener('keydown', (event) => {
+        if (event.key === 'Escape' && modal.style.display === 'block') {
+            modal.style.display = 'none';
+            document.body.classList.remove('modal-open');
+            // Devolve o foco para o botão que abriu o modal
+            const opener = document.querySelector(`[data-titulo="${modal.dataset.openedBy}"]`) || 
+                          document.querySelector('.projeto-detalhes');
+            if (opener) opener.focus();
         }
     });
-}
+
+    // Fecha ao clicar no X ou fora do modal
+    closeButton.addEventListener('click', () => fecharModal(modal));
+    modal.addEventListener('click', (event) => {
+        if (event.target === modal) fecharModal(modal);
+    });
+
+    // Função auxiliar para fechar
+    function fecharModal(modal) {
+        modal.style.display = 'none';
+        document.body.classList.remove('modal-open');
+    }
+}    
 
 // --- FUNÇÃO PARA ANIVERSARIANTES ---
 async function carregarAniversariantes() {
-    const container = document.getElementById('aniversariantes-container');
-    if (!container) return;
-    try {
-        const { data, error } = await supabase.from('funcionarios').select('*').eq('mes_aniversario', new Date().getMonth() + 1); // Exemplo, requer ajuste no backend
-        // A busca real continua sendo pelo seu endpoint Django
-        const response = await fetch('http://127.0.0.1:8000/api/aniversariantes/');
-        if (!response.ok) throw new Error('Falha ao buscar aniversariantes');
-        const aniversariantes = await response.json();
-        
-        container.innerHTML = '';
-        if (aniversariantes.length === 0) {
-            document.querySelector('.section_aniversariantes_moderna').style.display = 'none';
-            return;
-        }
+  const container = document.getElementById('aniversariantes-container');
+  if (!container) return;
 
-        aniversariantes.forEach(func => {
-            const dataAniversario = new Date(func.aniversario + 'T00:00:00');
-            const dia = String(dataAniversario.getDate()).padStart(2, '0');
-            const mes = String(dataAniversario.getMonth() + 1).padStart(2, '0');
-            const cardHTML = `<div class="swiper-slide"><div class="aniversariante-card-novo"><div class="foto-container"><img src="${func.imagem_url || 'imagens/avatar-padrao.png'}" alt="Foto de ${func.nome}"></div><div class="info-container"><h3 class="nome-aniversariante">${func.nome}</h3><p class="cargo-aniversariante">${func.cargo || ' '}</p><div class="data-aniversario">${dia}.${mes}</div></div></div></div>`;
-            container.innerHTML += cardHTML;
-        });
+  try {
+    const { data: funcionarios, error } = await supabase
+      .from('funcionarios')
+      .select('*');
 
-        new Swiper('.aniversariantes-swiper', {
-            slidesPerView: 'auto', spaceBetween: 30, centeredSlides: true, loop: true,
-            navigation: { nextEl: '.swiper-button-next', prevEl: '.swiper-button-prev' },
-        });
-    } catch (error) {
-        console.error("Erro ao carregar aniversariantes:", error);
+    if (error) throw error;
+
+    const mesAtual = new Date().getMonth() + 1;
+
+    const aniversariantes = funcionarios.filter(func => {
+      const data = new Date(func.aniversario);
+      return data.getMonth() + 1 === mesAtual;
+    });
+
+    container.innerHTML = '';
+
+    if (aniversariantes.length === 0) {
+      document.querySelector('.section_aniversariantes_moderna').style.display = 'none';
+      return;
     }
+
+    aniversariantes.forEach(func => {
+      const dataAniversario = new Date(func.aniversario + 'T00:00:00');
+      const dia = String(dataAniversario.getDate()).padStart(2, '0');
+      const mes = String(dataAniversario.getMonth() + 1).padStart(2, '0');
+
+      const slide = document.createElement('div');
+      slide.classList.add('embla__slide');
+      slide.innerHTML = `
+        <div class="aniversariante-card-novo">
+          <div class="foto-container">
+            <img src="${func.imagem_url || 'imagens/avatar-padrao.png'}"
+                 onerror="this.src='imagens/avatar-padrao.png'" 
+                 alt="Foto de ${func.nome}">
+          </div>
+          <div class="info-container">
+            <h3 class="nome-aniversariante">${func.nome}</h3>
+            <p class="cargo-aniversariante">${func.cargo || ''}</p>
+            <div class="data-aniversario">${dia}.${mes}</div>
+          </div>
+        </div>
+      `;
+      container.appendChild(slide);
+    });
+
+    const emblaNode = document.querySelector('.embla');
+    const options = { loop: false, align: 'center' };
+    const embla = EmblaCarousel(emblaNode.querySelector('.embla__viewport'), options);
+
+    document.querySelector('.embla__prev').addEventListener('click', embla.scrollPrev);
+    document.querySelector('.embla__next').addEventListener('click', embla.scrollNext);
+
+  } catch (error) {
+    console.error("Erro ao carregar aniversariantes:", error);
+  }
 }
 
 // --- FUNÇÃO PARA PROJETOS ---
@@ -101,7 +148,7 @@ async function carregarProjetos() {
             container.innerHTML += cardHTML;
         });
         
-        // CORREÇÃO: Chama a função para ativar os botões DEPOIS de criar os cards
+        // Ativa os botões e configura o foco
         ativarLogicaModalProjetos();
     } catch (error) {
         console.error("Erro ao carregar projetos:", error);
