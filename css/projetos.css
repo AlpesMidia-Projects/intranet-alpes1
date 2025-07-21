@@ -1,3 +1,6 @@
+/* ======================================================= */
+/* ESTILO DOS NOVOS CARDS DE PROJETO (DESIGN "CLEAN")      */
+/* ======================================================= */
 
 .projetos_grid {
   display: grid;
@@ -5,109 +8,76 @@
   gap: 25px; 
 }
 
-.projeto-card {
-  padding: 25px;
-  border-radius: 12px;
-  color: white; 
-  position: relative; 
-  overflow: hidden; 
-  transition: transform 0.3s ease, box-shadow 0.3s ease;
-  min-height: 280px; 
-  display: flex;
-  flex-direction: column;
-  justify-content: flex-end; /* Alinha todo o conteúdo na parte de baixo */
-  
-  /* Efeito de fundo com imagem */
-  background-size: cover;
-  background-position: center;
+/* O novo card de projeto */
+.projeto-card-novo {
+    display: flex; /* <-- CORRIGE O BUG DE ALINHAMENTO */
+    align-items: center;
+    gap: 20px;
+    background-color: #fff;
+    padding: 20px;
+    border-radius: 8px;
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.05);
+    margin-bottom: 20px;
+    transition: box-shadow 0.3s ease;
 }
 
-/* O gradiente escuro que fica por cima da imagem de fundo */
-.projeto-card::before {
-  content: '';
-  position: absolute;
-  top: 0;
-  left: 0;
-  width: 100%;
-  height: 100%;
-  background: linear-gradient(to top, rgba(0, 10, 30, 0.9), rgba(0, 10, 30, 0.4));
-  z-index: 0; 
+.projeto-card-novo:hover {
+    box-shadow: 0 6px 16px rgba(0, 0, 0, 0.1);
 }
 
-.projeto-card:hover {
-  transform: translateY(-5px);
-  box-shadow: 0 10px 20px rgba(0, 0, 0, 0.25);
+/* Imagem do projeto */
+.projeto-imagem img {
+    width: 150px;
+    height: 100px;
+    object-fit: cover;
+    border-radius: 6px;
+    background-color: #f0f0f0;
 }
 
-/* Garante que o conteúdo fique na frente do overlay */
-.projeto-card > * {
-  position: relative;
-  z-index: 1;
+/* Informações do projeto */
+.projeto-info {
+    flex-grow: 1;
 }
 
-.projeto-titulo {
-  font-size: 1.8em;
-  font-weight: bold;
-  margin-bottom: 8px;
-  text-shadow: 1px 1px 3px rgba(0,0,0,0.7);
+.projeto-info .projeto-titulo {
+    margin: 0 0 5px 0;
+    font-size: 1.2em;
+    font-weight: bold;
+    color: #333;
 }
 
-.projeto-descricao {
-  font-size: 1em;
-  margin-bottom: 20px;
-  color: #f0f0f0;
-  text-shadow: 1px 1px 3px rgba(0,0,0,0.7);
+.projeto-info .projeto-descricao {
+    margin: 0 0 15px 0;
+    font-size: 0.9em;
+    color: #777;
 }
 
-/* Barra de progresso (a trilha) */
-.progresso {
-  background-color: rgba(255, 255, 255, 0.2);
-  border-radius: 50px;
-  height: 12px;
-  width: 100%;
-  margin-bottom: 20px;
-  position: relative;
+/* Container da barra de progresso */
+.progresso-container {
+    background-color: #e9ecef;
+    border-radius: 10px;
+    height: 8px;
+    width: 80%; /* Ocupa 80% do espaço para a porcentagem caber ao lado */
+    display: inline-block; /* Alinha com o texto da porcentagem */
 }
 
-/* A barra colorida que preenche */
-.barra-progresso {
-  background-color: #007bff;
-  height: 100%;
-  border-radius: 50px;
-  transition: width 0.5s ease-in-out;
+.progresso-container .barra-progresso {
+    background-color: #6c757d;
+    height: 100%;
+    border-radius: 10px;
 }
 
-/* O texto da porcentagem (Ex: "60% concluído") */
-.progresso + span {
-  display: block;
-  font-size: 0.9em;
-  font-weight: bold;
-  margin-top: -35px; /* Sobe o texto para ficar alinhado com a barra */
-  margin-bottom: 20px;
-  text-align: right;
-  padding-right: 10px;
-  text-shadow: 1px 1px 2px rgba(0,0,0,0.6);
-}
-
-.projeto-detalhes {
-  background-color: #007bff;
-  color: white;
-  border: none;
-  padding: 10px 20px;
-  border-radius: 5px;
-  cursor: pointer;
-  font-size: 1em;
-  align-self: flex-start; /* Alinha o botão à esquerda */
-  transition: background-color 0.2s ease-in-out;
-}
-
-.projeto-detalhes:hover {
-  background-color: #0056b3;
+.projeto-porcentagem {
+    font-size: 0.9em;
+    font-weight: bold;
+    color: #6c757d;
+    margin-left: 10px;
+    vertical-align: middle;
 }
 
 
 /* ======================================================= */
-/* ESTILO DO MODAL DE PROJETOS                             */
+/* ESTILO DO MODAL DE PROJETOS (PRESERVADO)                */
 /* ======================================================= */
 
 .modal {
@@ -119,7 +89,8 @@
   width: 100%;
   height: 100%;
   overflow: auto; 
-  background-color: rgba(0, 0, 0, 0.6); 
+  background-color: rgba(0, 0, 0, 0.6);
+  backdrop-filter: blur(5px);
   animation: fadeIn 0.3s;
 }
 
@@ -143,13 +114,15 @@
   right: 25px;
   font-size: 28px;
   font-weight: bold;
+  transition: all 0.2s ease;
 }
 
 .close-button:hover,
 .close-button:focus {
-  color: black;
+  color: #ff0000;
   text-decoration: none;
   cursor: pointer;
+  transform: scale(1.1);
 }
 
 .modal-content h2 {
@@ -181,44 +154,7 @@
   to { transform: translateY(0); opacity: 1; }
 }
 
-.modal-content {
-    transition: transform 0.3s ease-out, opacity 0.3s ease;
-}
-.modal[style*="display: block"] .modal-content {
-    transform: translateY(0);
-    opacity: 1;
-}
-
-.modal {
-    backdrop-filter: blur(5px);
-}
-
-/* --- ADICIONE ISSO NO FINAL DO ARQUIVO --- */
-/* Estilos para o foco e acessibilidade */
-.close-button:focus {
-    outline: 2px solid #007bff;
-    outline-offset: 2px;
-    transform: scale(1.05);
-}
-
-.modal-content *:focus {
-    outline: none;
-    box-shadow: 0 0 0 3px rgba(0, 123, 255, 0.5);
-}
-
 /* Bloqueia scroll quando o modal está aberto */
 body.modal-open {
     overflow: hidden;
 }
-
-/* Efeito visual para o botão de fechar */
-.close-button {
-    transition: all 0.2s ease;
-}
-
-.close-button:hover {
-    color: #ff0000;
-    transform: scale(1.1);
-}
-/* --- FIM DOS NOVOS ESTILOS --- */
-

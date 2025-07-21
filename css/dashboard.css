@@ -29,7 +29,7 @@
 .dashboard_calendar,
 .dashboard_poll {
   flex: 1;
-  min-width: 300px;
+  min-width: 25px;
 }
 
 .dashboard_poll form {
@@ -48,26 +48,9 @@
 
 .dashboard_header{
   color: white;
-  padding: 40px 20px;
+  padding: 100px;
+  margin: auto;
   text-align: center;
-
-}
-
-.telainicio {
-  background-image: url('../imagens/wallpaper-alpes-2025b.jpg');
-  height: 100vh;
-  background-size: cover;
-  background-position: center center;
-  background-repeat: no-repeat;
-  background-color: #0d2c54; 
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  justify-content: flex-start;
-  position: relative; 
-  margin: 0;
-  padding: 0;
-  padding-top: 20vh;
 }
 
 /* Estilos para a lista de eventos do calendário */
@@ -85,4 +68,40 @@
 
 .lista-eventos-calendario li:last-child {
   border-bottom: none;
+}
+
+.telainicio {
+    /* Define uma altura fixa para a imagem de destaque */
+    height: 450px; 
+    /* Centraliza o conteúdo (o texto 'Bem-vindo') dentro do bloco */
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    /* Define a imagem de fundo */
+    background-image: url('../imagens/wallpaper-alpes-2025b.jpg'); 
+    background-size: cover;
+    background-position: center; 
+    border-radius: 5px; 
+    position: relative; 
+    overflow: hidden; 
+}
+
+/* Estiliza o texto "Bem-vindo" */
+.telainicio h2 {
+    color: white;
+    font-size: 3em;
+    font-weight: bold;
+    text-shadow: 2px 2px 8px rgba(0, 0, 0, 0.9); /* Sombra para melhor legibilidade */
+    z-index: 1000; /* Garante que o texto fique na frente do overlay */
+}
+
+.telainicio::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background-color: rgba(0, 0, 0, 0.0); /* Overlay preto com 40% de opacidade */
+    z-index: 1;
 }

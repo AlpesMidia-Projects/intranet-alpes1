@@ -1,106 +1,39 @@
-.embla {
-  padding: 40px 0;
-  background: #f8f9fc;
-  overflow: hidden;
-  position: relative;
-  max-width: 1500px;
-  margin: auto;
+/* Em aniversariantes.css - SUBSTITUA TODO O CONTEÚDO POR ISTO */
+
+/* Estilos para o novo widget de aniversariantes */
+
+#aniversariantes-container {
+    display: flex;
+    flex-direction: column;
+    gap: 15px; /* Espaço entre cada aniversariante */
 }
 
-.embla__viewport {
-  height: 360px; /* igual ou um pouco mais que o card */
-}
-.embla__container {
-  display: flex;
-  gap: 30px;
-  padding: 10px;
-  justify-content: center;
+.aniversariante-item {
+    display: flex;
+    align-items: center;
+    width: 100%;
 }
 
-.embla__slide {
-  flex: 0 0 auto;
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  width: auto;
-  height: 100%;
+.aniversariante-avatar {
+    width: 35px;
+    height: 35px;
+    border-radius: 50%;
+    object-fit: cover;
+    background-color: #e0e0e0; /* Cor de fundo cinza como no modelo */
+    margin-right: 15px;
 }
 
-.embla__prev,
-.embla__next {
-  position: absolute;
-  top: 50%;
-  transform: translateY(-50%);
-  background: #007bff;
-  color: white;
-  border: none;
-  padding: 10px 15px;
-  font-size: 1.2rem;
-  cursor: pointer;
-  border-radius: 50%;
-  z-index: 10;
+.aniversariante-nome {
+    font-weight: bold;
+    color: #333;
 }
 
-.embla__prev { left: -40px; }
-.embla__next { right: -40px; }
-
-.aniversariante-card-novo {
-  width: 250px;
-  max-width: 100%;
-  height: 340px; /* define a altura total */
-  box-sizing: border-box;
-  overflow: hidden;
-  display: flex;
-  flex-direction: column;
-  justify-content: space-between;
-  padding: 20px;
-  background: white;
-  border-radius: 20px;
-  box-shadow: 0 8px 16px rgba(0,0,0,0.1);
-  position: relative;
-  z-index: 1;
+.aniversariante-data-tag {
+    margin-left: auto; /* Empurra a data para a direita */
+    background-color: #1abc9c; /* Cor turquesa do modelo */
+    color: white;
+    font-size: 0.8em;
+    font-weight: bold;
+    padding: 4px 8px;
+    border-radius: 5px;
 }
-
-.foto-container {
-  width: 120px;
-  height: 120px;
-  margin: 0 auto 15px;
-  border-radius: 50%;
-  overflow: hidden;
-  border: 4px solid #007bff20;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  background-color: #f0f0f0;
-}
-
-.foto-container img {
-  height: 100%;
-  width: auto;
-  object-fit: cover;
-  object-position: center top;
-}
-
-.titulo-aniversariantes {
-  text-align: center;
-  font-size: 2rem;
-  font-weight: 700;
-  color: #007bff;
-  margin-bottom: 20px;
-  font-family: 'Montserrat', sans-serif;
-}
-
-.bg-parabens {
-  position: absolute;
-  top: 50%;
-  left: 50%;
-  transform: translate(-50%, -50%);
-  font-size: 6rem;
-  font-weight: 800;
-  color: rgba(0, 123, 255, 0.61); /* azul bem fraquinho */
-  pointer-events: none;
-  z-index: 0;
-  white-space: nowrap;
-  user-select: none;
-}
-

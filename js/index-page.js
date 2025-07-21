@@ -1,134 +1,134 @@
 import { supabase } from '/js/supabaseClient.js';
+function atualizarMensagemDeBoasVindas(session) {
+    if (!session) return; // Se não há sessão, não faz nada
 
-function ativarLogicaModalProjetos() {
-    const modal = document.getElementById('modal-detalhes');
-    if (!modal) {
-        console.error("Modal não encontrado!");
-        return;
+    const nome = session.user.user_metadata.full_name || session.user.email;
+    const welcomeUserName = document.getElementById('welcome-user-name');
+    
+    if (welcomeUserName) {
+        welcomeUserName.textContent = nome;
     }
-    const botoesDetalhes = document.querySelectorAll('.projeto-detalhes');
-    const closeButton = modal.querySelector('.close-button');
-    const modalTitulo = document.getElementById('modal-titulo');
-    const modalDescricao = document.getElementById('modal-descricao');
-    const modalBarraProgresso = document.getElementById('modal-barra-progresso');
-    const modalPorcentagem = document.getElementById('modal-porcentagem');
-    const modalTarefasLista = document.querySelector('#modal-tarefas ul');
-
-botoesDetalhes.forEach(button => {
-        button.addEventListener('click', function() {
-            modalTitulo.textContent = this.dataset.titulo;
-            modalDescricao.textContent = this.dataset.descricao;
-            modalBarraProgresso.style.width = this.dataset.progresso + '%';
-            modalPorcentagem.textContent = this.dataset.progresso + '%';
-            
-            const tarefas = this.dataset.tarefas ? this.dataset.tarefas.split(';') : [];
-            modalTarefasLista.innerHTML = '';
-            tarefas.forEach(tarefa => {
-                if (tarefa) {
-                    const li = document.createElement('li');
-                    li.textContent = tarefa;
-                    modalTarefasLista.appendChild(li);
-                }
-            });
-
-            // NOVO CÓDIGO: Abre o modal e gerencia o foco
-            modal.style.display = 'block';
-            document.body.classList.add('modal-open'); // Bloqueia scroll
-            closeButton.focus(); // Foca no botão de fechar
-
-            // Armazena o botão que abriu o modal (para devolver o foco depois)
-            modal.dataset.openedBy = this.id || this.textContent.trim();
-        });
-    });
-
-    // NOVO CÓDIGO: Fecha o modal com Esc
-    document.addEventListener('keydown', (event) => {
-        if (event.key === 'Escape' && modal.style.display === 'block') {
-            modal.style.display = 'none';
-            document.body.classList.remove('modal-open');
-            // Devolve o foco para o botão que abriu o modal
-            const opener = document.querySelector(`[data-titulo="${modal.dataset.openedBy}"]`) || 
-                          document.querySelector('.projeto-detalhes');
-            if (opener) opener.focus();
-        }
-    });
-
-    // Fecha ao clicar no X ou fora do modal
-    closeButton.addEventListener('click', () => fecharModal(modal));
-    modal.addEventListener('click', (event) => {
-        if (event.target === modal) fecharModal(modal);
-    });
-
-    // Função auxiliar para fechar
-    function fecharModal(modal) {
-        modal.style.display = 'none';
-        document.body.classList.remove('modal-open');
-    }
-}    
-
-// --- FUNÇÃO PARA ANIVERSARIANTES ---
-async function carregarAniversariantes() {
-  const container = document.getElementById('aniversariantes-container');
-  if (!container) return;
-
-  try {
-    const { data: funcionarios, error } = await supabase
-      .from('funcionarios')
-      .select('*');
-
-    if (error) throw error;
-
-    const mesAtual = new Date().getMonth() + 1;
-
-    const aniversariantes = funcionarios.filter(func => {
-      const data = new Date(func.aniversario);
-      return data.getMonth() + 1 === mesAtual;
-    });
-
-    container.innerHTML = '';
-
-    if (aniversariantes.length === 0) {
-      document.querySelector('.section_aniversariantes_moderna').style.display = 'none';
-      return;
-    }
-
-    aniversariantes.forEach(func => {
-      const dataAniversario = new Date(func.aniversario + 'T00:00:00');
-      const dia = String(dataAniversario.getDate()).padStart(2, '0');
-      const mes = String(dataAniversario.getMonth() + 1).padStart(2, '0');
-
-      const slide = document.createElement('div');
-      slide.classList.add('embla__slide');
-      slide.innerHTML = `
-        <div class="aniversariante-card-novo">
-          <div class="foto-container">
-            <img src="${func.imagem_url || 'imagens/avatar-padrao.png'}"
-                 onerror="this.src='imagens/avatar-padrao.png'" 
-                 alt="Foto de ${func.nome}">
-          </div>
-          <div class="info-container">
-            <h3 class="nome-aniversariante">${func.nome}</h3>
-            <p class="cargo-aniversariante">${func.cargo || ''}</p>
-            <div class="data-aniversario">${dia}.${mes}</div>
-          </div>
-        </div>
-      `;
-      container.appendChild(slide);
-    });
-
-    const emblaNode = document.querySelector('.embla');
-    const options = { loop: false, align: 'center' };
-    const embla = EmblaCarousel(emblaNode.querySelector('.embla__viewport'), options);
-
-    document.querySelector('.embla__prev').addEventListener('click', embla.scrollPrev);
-    document.querySelector('.embla__next').addEventListener('click', embla.scrollNext);
-
-  } catch (error) {
-    console.error("Erro ao carregar aniversariantes:", error);
-  }
 }
 
-// --- FUNÇÃO PARA PROJETOS ---
+async function carregarAniversariantes() {
+    const container = document.getElementById('aniversariantes-container');
+    if (!container) return;
+
+    try {
+        const response = await fetch('http://127.0.0.1:8000/api/equipe/');
+        if (!response.ok) throw new Error('Falha ao buscar funcionários');
+        const funcionarios = await response.json();
+
+        const mesAtual = new Date().getMonth();
+        const aniversariantes = funcionarios.filter(func => {
+            if (!func.aniversario) return false;
+            const dataAniversario = new Date(func.aniversario);
+            return dataAniversario.getUTCMonth() === mesAtual;
+        });
+
+        container.innerHTML = ''; // Limpa o container
+        if (aniversariantes.length === 0) {
+            container.innerHTML = '<p>Nenhum aniversariante este mês.</p>';
+            return;
+        }
+
+        // Mape para ordenar por dia do mês
+        aniversariantes.sort((a, b) => new Date(a.aniversario).getUTCDate() - new Date(b.aniversario).getUTCDate());
+
+        aniversariantes.forEach(func => {
+            const dataAniversario = new Date(func.aniversario + 'T00:00:00');
+            // Formata a data como "Mês Dia" (ex: "Jul 17")
+            const dataFormatada = dataAniversario.toLocaleString('pt-BR', { month: 'short', day: '2-digit' }).replace('.', '');
+
+            // NOVA ESTRUTURA HTML (MAIS SIMPLES)
+            const itemHTML = `
+                <div class="aniversariante-item">
+                    <img class="aniversariante-avatar" src="${func.imagem_url || 'imagens/avatar-padrao.png'}" alt="Foto de ${func.nome}">
+                    <span class="aniversariante-nome">${func.nome}</span>
+                    <span class="aniversariante-data-tag">${dataFormatada}</span>
+                </div>
+            `;
+            container.innerHTML += itemHTML;
+        });
+
+    } catch (error) {
+        console.error("Erro ao carregar aniversariantes:", error);
+        container.innerHTML = '<p style="color:red;">Erro ao carregar.</p>';
+    }
+}
+
+async function carregarEventosDoCalendario(session) {
+    const calendarEl = document.getElementById('meu-calendario-container');
+    const listaEventosEl = document.getElementById('lista-eventos-container');
+    if (!calendarEl || !listaEventosEl) return;
+    if (!session) {
+        calendarEl.innerHTML = '<p>Faça login para ver seu calendário.</p>';
+        return;
+    }
+
+    try {
+        const response = await fetch('http://127.0.0.1:8000/api/calendar-events/', {
+            headers: { 'Authorization': `Bearer ${session.provider_token}` }
+        });
+        if (!response.ok) throw new Error('Falha ao buscar eventos');
+        const googleEvents = await response.json();
+
+        // Lógica para o Calendário Principal (FullCalendar)
+        const fullCalendarEvents = googleEvents.map(event => ({
+            title: event.summary,
+            start: event.start.dateTime || event.start.date,
+            end: event.end.dateTime || event.end.date,
+            url: event.htmlLink,
+        }));
+        const calendar = new FullCalendar.Calendar(calendarEl, {
+            initialView: 'dayGridMonth',
+            locale: 'pt-br',
+            headerToolbar: { left: 'prev,next today', center: 'title', right: '' },
+            buttonText: { today: 'Hoje' },
+            events: fullCalendarEvents,
+            eventClick: (info) => {
+                info.jsEvent.preventDefault();
+                if (info.event.url) window.open(info.event.url, "_blank");
+            }
+        });
+
+        calendarEl.innerHTML = ''; // Limpa o container
+        
+        calendar.render();
+
+        listaEventosEl.innerHTML = '';
+        const meses = ["JAN", "FEV", "MAR", "ABR", "MAI", "JUN", "JUL", "AGO", "SET", "OUT", "NOV", "DEZ"];
+        if (googleEvents.length === 0) {
+            listaEventosEl.innerHTML = '<p>Nenhum evento futuro.</p>';
+            return;
+        }
+
+        googleEvents.slice(0, 4).forEach(event => { // Pega apenas os 4 primeiros eventos
+            const dataInicio = new Date(event.start.dateTime || event.start.date);
+            const dia = dataInicio.getDate();
+            const mes = meses[dataInicio.getMonth()];
+            const eventoHTML = `
+                <div class="evento-item">
+                    <div class="evento-data">
+                        <div class="dia">${dia}</div>
+                        <div class="mes">${mes}</div>
+                    </div>
+                    <div class="evento-borda"></div>
+                    <p class="evento-titulo">${event.summary}</p>
+                </div>
+            `;
+            listaEventosEl.innerHTML += eventoHTML;
+        });
+
+    } catch (error) {
+        console.error("Erro ao carregar eventos:", error);
+    }
+}
+
+
+/**
+ * 4. CARREGA OS PROJETOS COM O NOVO VISUAL "CLEAN"
+ */
 async function carregarProjetos() {
     const container = document.getElementById('projetos-container');
     if (!container) return;
@@ -144,58 +144,65 @@ async function carregarProjetos() {
         }
 
         projetos.forEach(proj => {
-            const cardHTML = `<div class="projeto-card" style="background-image: linear-gradient(rgba(0,0,0,0.6), rgba(0,0,0,0.6)), url('${proj.imagem_url || ''}')"><h3 class="projeto-titulo">${proj.titulo}</h3><p class="projeto-descricao">${proj.descricao}</p><div class="progresso"><div class="barra-progresso" style="width: ${proj.progresso || 0}%;"></div></div><span>${proj.progresso || 0}% concluído</span><button class="projeto-detalhes" data-titulo="${proj.titulo}" data-descricao="${proj.descricao_detalhada || proj.descricao}" data-progresso="${proj.progresso || 0}" data-tarefas="${proj.tarefas || ''}">Ver Detalhes</button></div>`;
+            const cardHTML = `
+              <div class="projeto-card-novo">
+                <div class="projeto-imagem">
+                  <img src="${proj.imagem_url || 'https://via.placeholder.com/150'}" alt="Imagem do Projeto ${proj.titulo}">
+                </div>
+                <div class="projeto-info">
+                  <h3 class="projeto-titulo">${proj.titulo}</h3>
+                  <p class="projeto-descricao">${proj.descricao}</p>
+                  <div class="progresso-container">
+                    <div class="barra-progresso" style="width: ${proj.progresso || 0}%;"></div>
+                  </div>
+                  <span class="projeto-porcentagem">${proj.progresso || 0}%</span>
+                </div>
+              </div>
+            `;
             container.innerHTML += cardHTML;
         });
         
-        // Ativa os botões e configura o foco
-        ativarLogicaModalProjetos();
     } catch (error) {
         console.error("Erro ao carregar projetos:", error);
     }
 }
 
-// --- FUNÇÃO PARA O CALENDÁRIO INTERATIVO ---
-async function carregarEventosDoCalendario() {
-    const calendarEl = document.getElementById('meu-calendario-container');
-    if (!calendarEl) return;
-    try {
-        const { data: { session } } = await supabase.auth.getSession();
-        if (!session) {
-            calendarEl.innerHTML = '<p>Faça login para ver seu calendário.</p>';
-            return;
-        }
-        const response = await fetch('http://127.0.0.1:8000/api/calendar-events/', {
-            headers: { 'Authorization': `Bearer ${session.provider_token}` }
-        });
-        if (!response.ok) throw new Error('Falha ao buscar eventos do calendário');
-        const googleEvents = await response.json();
-        
-        const fullCalendarEvents = googleEvents.map(event => ({
-            title: event.summary,
-            start: event.start.dateTime || event.start.date,
-            end: event.end.dateTime || event.end.date,
-            url: event.htmlLink,
-        }));
 
-        const calendar = new FullCalendar.Calendar(calendarEl, {
-            initialView: 'dayGridMonth', locale: 'pt-br',
-            headerToolbar: { left: 'prev,next today', center: 'title', right: 'dayGridMonth,timeGridWeek,listWeek' },
-            buttonText: { today: 'Hoje', month: 'Mês', week: 'Semana', list: 'Lista' },
-            events: fullCalendarEvents,
-            eventClick: function(info) {
-                info.jsEvent.preventDefault();
-                if (info.event.url) window.open(info.event.url, "_blank");
-            }
-        });
-        calendar.render();
-    } catch (error) {
-        console.error("Erro ao carregar eventos:", error);
-        calendarEl.innerHTML = '<p style="color:red;">Não foi possível carregar o calendário.</p>';
-    }
+/**
+ * 5. NOVA FUNÇÃO PARA O BOTÃO "VOLTAR AO TOPO"
+ */
+function inicializarBotaoVoltarAoTopo() {
+    const btn = document.getElementById('voltar-ao-topo-btn');
+    if(!btn) return;
+    
+    // Mostra o botão quando o usuário rolar a página
+    window.onscroll = function() {
+        if (document.body.scrollTop > 100 || document.documentElement.scrollTop > 100) {
+            btn.classList.add('visivel');
+        } else {
+            btn.classList.remove('visivel');
+        }
+    };
+    
+    // Rola para o topo quando o botão é clicado
+    btn.onclick = function(e) {
+        e.preventDefault();
+        window.scrollTo({top: 0, behavior: 'smooth'});
+    };
 }
 
-// --- PONTO DE PARTIDA: CHAMA TODAS AS FUNÇÕES ---
-carregarAniversariantes();
-carregarProjetos();
-carregarEventosDoCalendario();
+
+// --- PONTO DE PARTIDA PRINCIPAL ---
+document.addEventListener('DOMContentLoaded', async () => {
+    // Pega a sessão do usuário uma vez para usar em várias funções
+    const { data: { session } } = await supabase.auth.getSession();
+
+    // Chama todas as funções de carregamento
+    carregarAniversariantes();
+    carregarEventosDoCalendario(session);
+    carregarProjetos();
+    
+    // Funções de UI
+    atualizarMensagemDeBoasVindas(session);
+    inicializarBotaoVoltarAoTopo();
+});

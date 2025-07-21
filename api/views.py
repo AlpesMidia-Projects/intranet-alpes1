@@ -13,6 +13,11 @@ from supabase import create_client, Client # Importa o cliente Supabase
 from datetime import datetime
 from googleapiclient.discovery import build
 from google.oauth2.credentials import Credentials
+from rest_framework.decorators import api_view
+from rest_framework.response import Response
+from .models import Funcionario, Projeto
+from .serializers import FuncionarioSerializer, ProjetoSerializer
+from datetime import datetime
 
 load_dotenv()
 
@@ -123,36 +128,32 @@ def get_historico_audios(request):
     
     return JsonResponse({'error': 'Método não permitido.'}, status=405)
 
+@api_view(['GET'])
 def get_aniversariantes_do_mes(request):
-    # Garante que só aceitamos requisições GET
-    if request.method == 'GET':
-        try:
-            # Pega o número do mês atual (ex: 7 para Julho)
-            mes_atual = datetime.now().month
-
-            # Chama a função que criamos no Supabase para buscar os aniversariantes
-            aniversariantes = supabase_backend_client.rpc('get_birthdays_for_month', {'month_num': mes_atual}).execute()
-
-            # Retorna a lista de aniversariantes encontrada
-            return JsonResponse(aniversariantes.data, safe=False)
-
-        except Exception as e:
-            print(f"❌ ERRO AO BUSCAR ANIVERSARIANTES: {e}")
-            return JsonResponse({'error': str(e)}, status=500)
+    try:
+        mes_atual = datetime.now().month
+        # Usando o ORM do Django para filtrar pelo mês do campo 'aniversario'
+        aniversariantes = Funcionario.objects.filter(aniversario__month=mes_atual)
+        # Usando o serializer para converter os dados para JSON
+        serializer = FuncionarioSerializer(aniversariantes, many=True)
+        return Response(serializer.data)
+    except Exception as e:
+        print(f"❌ ERRO AO BUSCAR ANIVERSARIANTES COM DJANGO: {e}")
+        return Response({'error': str(e)}, status=500)
     
-    return JsonResponse({'error': 'Método não permitido.'}, status=405)
 
 # --- NOVA VIEW PARA BUSCAR OS PROJETOS ---
+@api_view(['GET'])
 def get_projetos(request):
-    if request.method == 'GET':
-        try:
-            # Busca todos os dados da tabela 'projetos'
-            response = supabase_backend_client.table("projetos").select("*").order("id", desc=True).execute()
-            return JsonResponse(response.data, safe=False)
-        except Exception as e:
-            print(f"❌ ERRO AO BUSCAR PROJETOS: {e}")
-            return JsonResponse({'error': str(e)}, status=500)
-    return JsonResponse({'error': 'Método não permitido.'}, status=405)
+    try:
+        # Usando o ORM do Django para buscar todos os projetos
+        projetos = Projeto.objects.all().order_by('-id')
+        # Usando o serializer para converter os dados
+        serializer = ProjetoSerializer(projetos, many=True)
+        return Response(serializer.data)
+    except Exception as e:
+        print(f"❌ ERRO AO BUSCAR PROJETOS COM DJANGO: {e}")
+        return Response({'error': str(e)}, status=500)
 
 @csrf_exempt
 def get_google_calendar_events(request):
@@ -184,3 +185,16 @@ def get_google_calendar_events(request):
     except Exception as e:
         print(f"❌ ERRO AO BUSCAR EVENTOS DO CALENDAR: {e}")
         return JsonResponse({'error': str(e)}, status=500)
+    
+@api_view(['GET'])
+def get_funcionarios(request):
+    """
+    Retorna uma lista de TODOS os funcionários.
+    """
+    try:
+        funcionarios = Funcionario.objects.all().order_by('nome')
+        serializer = FuncionarioSerializer(funcionarios, many=True)
+        return Response(serializer.data)
+    except Exception as e:
+        print(f"❌ ERRO AO BUSCAR TODOS OS FUNCIONÁRIOS: {e}")
+        return Response({'error': str(e)}, status=500)

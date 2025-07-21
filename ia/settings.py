@@ -39,6 +39,7 @@ INSTALLED_APPS = [
     'django.contrib.messages',
     'django.contrib.staticfiles',
     'api',
+    'rest_framework',
 ]
 
 MIDDLEWARE = [
@@ -77,8 +78,12 @@ WSGI_APPLICATION = 'ia.wsgi.application'
 
 DATABASES = {
     'default': {
-        'ENGINE': 'django.db.backends.sqlite3',
-        'NAME': BASE_DIR / 'db.sqlite3',
+        'ENGINE': 'django.db.backends.postgresql',
+        'NAME': 'postgres',  # Ou o nome do seu DB se for diferente
+        'USER': 'postgres.owzaluztcecawnfyfitu',  # Ou o seu usuário se for diferente
+        'PASSWORD': 'Passdb*2025Gu', # Cole a senha aqui
+        'HOST': 'aws-0-sa-east-1.pooler.supabase.com',     # Cole o Host aqui
+        'PORT': '6543',     # Cole a Porta aqui
     }
 }
 
@@ -127,6 +132,6 @@ DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
 # --- CONFIGURAÇÕES DE CORS ---
 # Lista de origens que têm permissão para fazer requisições ao nosso backend
 CORS_ALLOWED_ORIGINS = [
-    "http://127.0.0.1:5500",  # A origem do seu front-end (Live Server)
-    "http://localhost:5500",   # Uma alternativa para o mesmo endereço
+    "http://127.0.0.1:5500",  
+    "http://localhost:5500",   
 ]
