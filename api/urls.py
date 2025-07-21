@@ -14,4 +14,5 @@ urlpatterns = [
     path('calendar-events/', views.get_google_calendar_events, name='get_calendar_events'),
     path('historico-audios/', views.get_historico_audios, name='get_historico_audios'),
     path('equipe/', views.get_funcionarios, name='get_equipe'),
+    path('noticias/', views.get_noticias_ativas, name='api-noticias'),
 ]

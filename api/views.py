@@ -1,15 +1,16 @@
 # api/views.py
 
+from django.utils import timezone
 import os
 import json
-import uuid # Importa a biblioteca para gerar nomes únicos
+import uuid 
 from django.http import JsonResponse, HttpResponse
 from django.views.decorators.http import require_POST
 from django.views.decorators.csrf import csrf_exempt
 from dotenv import load_dotenv
 from openai import OpenAI
 from elevenlabs.client import ElevenLabs
-from supabase import create_client, Client # Importa o cliente Supabase
+from supabase import create_client, Client 
 from datetime import datetime
 from googleapiclient.discovery import build
 from google.oauth2.credentials import Credentials
@@ -18,6 +19,8 @@ from rest_framework.response import Response
 from .models import Funcionario, Projeto
 from .serializers import FuncionarioSerializer, ProjetoSerializer
 from datetime import datetime
+from .models import Noticia
+from .serializers import NoticiaSerializer
 
 load_dotenv()
 
@@ -198,3 +201,18 @@ def get_funcionarios(request):
     except Exception as e:
         print(f"❌ ERRO AO BUSCAR TODOS OS FUNCIONÁRIOS: {e}")
         return Response({'error': str(e)}, status=500)
+    
+@api_view(['GET'])
+def get_noticias_ativas(request):
+    """
+    Retorna uma lista de notícias que estão dentro do período de publicação.
+    """
+    hoje = timezone.now()
+    # Filtra notícias cuja data de início já passou e a data de fim ainda não chegou (ou é nula)
+    noticias = Noticia.objects.filter(
+        data_inicio_publicacao__lte=hoje
+    ).exclude(
+        data_fim_publicacao__lt=hoje
+    )
+    serializer = NoticiaSerializer(noticias, many=True)
+    return Response(serializer.data)

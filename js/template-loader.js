@@ -90,6 +90,7 @@ async function initializePage() {
     setActiveNav();
     updateUserStatus();
     initializeUIButtons();
+    verificarNoticiasNovas();
 }
 
 function initializeUIButtons() {
@@ -116,6 +117,39 @@ function initializeUIButtons() {
                 userDropdownMenu.classList.remove('ativo');
             }
         });
+    }
+}
+
+async function verificarNoticiasNovas() {
+    try {
+        const response = await fetch('http://127.0.0.1:8000/api/noticias/');
+        const noticias = await response.json();
+        if (noticias.length === 0) return;
+
+        // Pega os IDs das notícias que o usuário já viu
+        const noticiasVistas = JSON.parse(localStorage.getItem('noticias_vistas')) || [];
+        
+        // Filtra para encontrar notícias que ainda não foram vistas
+        const noticiasNovas = noticias.filter(n => !noticiasVistas.includes(n.id));
+
+        if (noticiasNovas.length > 0) {
+            const noticiaMaisRecente = noticiasNovas[0];
+            const popup = document.getElementById('popup-noticia');
+            
+            document.getElementById('popup-titulo').textContent = noticiaMaisRecente.titulo;
+            popup.style.display = 'flex';
+
+            document.getElementById('popup-fechar').onclick = () => popup.style.display = 'none';
+            document.getElementById('popup-ver-noticia').onclick = () => {
+                window.location.href = '/noticias.html';
+            };
+
+            // Marca todas as notícias novas como vistas para não mostrar o popup novamente
+            const todosOsIds = noticias.map(n => n.id);
+            localStorage.setItem('noticias_vistas', JSON.stringify(todosOsIds));
+        }
+    } catch (error) {
+        console.error('Erro ao verificar notícias novas:', error);
     }
 }
 
