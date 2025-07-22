@@ -216,3 +216,8 @@ def get_noticias_ativas(request):
     )
     serializer = NoticiaSerializer(noticias, many=True)
     return Response(serializer.data)
+
+from django.http import JsonResponse
+
+def health_check(request):
+    return JsonResponse({"status": "ok", "message": "Django está respondendo!"})
