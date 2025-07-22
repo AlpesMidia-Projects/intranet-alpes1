@@ -1,4 +1,5 @@
 // js/template-loader.js
+import { API_BASE_URL } from './config.js'; 
 import { supabase } from '/js/supabaseClient.js';
 
 // Função para carregar componentes HTML (versão única e correta)
@@ -91,6 +92,7 @@ async function initializePage() {
     updateUserStatus();
     initializeUIButtons();
     verificarNoticiasNovas();
+    initializeThemeSwitcher();
 }
 
 function initializeUIButtons() {
@@ -122,7 +124,7 @@ function initializeUIButtons() {
 
 async function verificarNoticiasNovas() {
     try {
-        const response = await fetch('http://127.0.0.1:8000/api/noticias/');
+        const response = await fetch(`${API_BASE_URL}/api/noticias/`);
         const noticias = await response.json();
         if (noticias.length === 0) return;
 
@@ -151,6 +153,29 @@ async function verificarNoticiasNovas() {
     } catch (error) {
         console.error('Erro ao verificar notícias novas:', error);
     }
+}
+
+function initializeThemeSwitcher() {
+    const themeToggle = document.getElementById('theme-toggle');
+    if (!themeToggle) return;
+
+    // 1. Verifica no localStorage se o tema escuro já estava ativo
+    const currentTheme = localStorage.getItem('theme');
+    if (currentTheme === 'dark') {
+        document.body.classList.add('dark-mode');
+        themeToggle.checked = true;
+    }
+
+    // 2. Adiciona o evento de clique no interruptor
+    themeToggle.addEventListener('change', function() {
+        if (this.checked) {
+            document.body.classList.add('dark-mode');
+            localStorage.setItem('theme', 'dark'); // Salva a escolha
+        } else {
+            document.body.classList.remove('dark-mode');
+            localStorage.setItem('theme', 'light'); // Salva a escolha
+        }
+    });
 }
 
 // Inicia todo o processo quando a estrutura da página estiver pronta

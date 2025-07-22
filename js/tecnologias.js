@@ -1,3 +1,5 @@
+import { API_BASE_URL } from './config.js'; 
+
 document.addEventListener('DOMContentLoaded', function() {
     
 const accordionHeaders = document.querySelectorAll(".accordion-header");
@@ -49,7 +51,7 @@ accordionHeaders.forEach(header => {
             addMessageToChat('assistant', '...');
 
             try {
-                const response = await fetch('http://127.0.0.1:8000/api/gerar-texto/', {
+                const response = await fetch(`${API_BASE_URL}/api/gerar-texto/`, {
                     method: 'POST',
                     headers: { 'Content-Type': 'application/json' },
                     body: JSON.stringify({ messages: conversationHistory }) 
@@ -102,7 +104,7 @@ accordionHeaders.forEach(header => {
             historyListContainer.innerHTML = '<p>Carregando histórico...</p>';
 
             try {
-                const response = await fetch('http://127.0.0.1:8000/api/historico-audios/');
+                const response = await fetch(`${API_BASE_URL}/api/historico-audios/`,);
                 if (!response.ok) throw new Error('Falha ao buscar histórico');
 
                 const historico = await response.json();
@@ -173,7 +175,7 @@ accordionHeaders.forEach(header => {
 
             try {
                 // A chamada fetch continua a mesma
-                const response = await fetch('http://127.0.0.1:8000/api/gerar-audio/', {
+                const response = await fetch(`${API_BASE_URL}/api/gerar-audio/`, {
                     method: 'POST',
                     headers: { 'Content-Type': 'application/json' },
                     body: JSON.stringify({ texto: texto, voz: voz })

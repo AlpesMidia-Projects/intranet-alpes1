@@ -1,10 +1,12 @@
 // js/noticias.js
+
+import { API_BASE_URL } from './config.js'; 
 async function carregarNoticias() {
     const container = document.getElementById('noticias-container');
     if (!container) return;
 
     try {
-        const response = await fetch('http://127.0.0.1:8000/api/noticias/');
+        const response = await fetch(`${API_BASE_URL}/api/noticias/`);
         const noticias = await response.json();
         container.innerHTML = '';
         noticias.forEach(noticia => {

@@ -8,17 +8,17 @@
   gap: 25px; 
 }
 
-/* O novo card de projeto */
 .projeto-card-novo {
-    display: flex; /* <-- CORRIGE O BUG DE ALINHAMENTO */
+    display: flex;
     align-items: center;
     gap: 20px;
-    background-color: #fff;
+    background-color: var(--cor-surface);
     padding: 20px;
     border-radius: 8px;
-    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.05);
+    box-shadow: var(--sombra-card);
     margin-bottom: 20px;
     transition: box-shadow 0.3s ease;
+    border: 1px solid var(--cor-borda);
 }
 
 .projeto-card-novo:hover {
@@ -31,7 +31,7 @@
     height: 100px;
     object-fit: cover;
     border-radius: 6px;
-    background-color: #f0f0f0;
+    background-color: var(--cor-fundo);
 }
 
 /* Informações do projeto */
@@ -43,26 +43,25 @@
     margin: 0 0 5px 0;
     font-size: 1.2em;
     font-weight: bold;
-    color: #333;
+    color: var(--cor-texto-principal);
 }
 
 .projeto-info .projeto-descricao {
     margin: 0 0 15px 0;
     font-size: 0.9em;
-    color: #777;
+    color: var(--cor-texto-secundario);
 }
 
-/* Container da barra de progresso */
 .progresso-container {
-    background-color: #e9ecef;
+    background-color: var(--cor-fundo);
     border-radius: 10px;
     height: 8px;
-    width: 80%; /* Ocupa 80% do espaço para a porcentagem caber ao lado */
-    display: inline-block; /* Alinha com o texto da porcentagem */
+    width: 80%; 
+    display: inline-block;
 }
 
 .progresso-container .barra-progresso {
-    background-color: #6c757d;
+    background-color: var(--cor-texto-secundario);
     height: 100%;
     border-radius: 10px;
 }
@@ -70,7 +69,7 @@
 .projeto-porcentagem {
     font-size: 0.9em;
     font-weight: bold;
-    color: #6c757d;
+    color: var(--cor-texto-secundario);
     margin-left: 10px;
     vertical-align: middle;
 }
@@ -95,8 +94,8 @@
 }
 
 .modal-content {
-  background-color: #fefefe;
-  color: #333;
+  background-color: var(--cor-surface);
+  color: var(--cor-texto-principal);
   margin: 10% auto; 
   padding: 30px;
   border-radius: 8px;

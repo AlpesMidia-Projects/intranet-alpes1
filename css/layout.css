@@ -1,21 +1,52 @@
-/* css/novo_layout.css */
+:root {
+    /* Tema Claro (Padrão) */
+    --cor-fundo: #f4f7fa;
+    --cor-surface: #ffffff;
+    --cor-borda: #e0e0e0;
+    --cor-borda-suave: #eeeeee;
+    --cor-texto-principal: #333333;
+    --cor-texto-secundario: #6c757d;
+    --cor-texto-terciario: #999999;
+    --cor-texto-invertido: #ffffff;
+    --cor-destaque: #1a5bbc;
+    --cor-destaque-hover: #134288;
+    --cor-destaque-secundario: #1abc9c;
+    --cor-fundo-hover: #eef4ff;
+    --sombra-card: 0 4px 12px rgba(0,0,0,0.08);
+}
 
-/* Estilos gerais */
+body.dark-mode {
+    /* Tema Escuro */
+    --cor-fundo: #121212;
+    --cor-surface: #1e1e1e;
+    --cor-borda: #333333;
+    --cor-borda-suave: #2c2c2c;
+    --cor-texto-principal: #e0e0e0;
+    --cor-texto-secundario: #a0a0a0;
+    --cor-texto-terciario: #888888;
+    --cor-texto-invertido: #ffffff;
+    --cor-destaque: #58a6ff;
+    --cor-destaque-hover: #7abfff;
+    --cor-destaque-secundario: #20c997;
+    --cor-fundo-hover: #2a2a2a;
+    --sombra-card: 0 4px 12px rgba(0,0,0,0.3);
+}
+
 body {
     font-family: 'Lato', sans-serif;
     margin: 0;
-    background-color: #f4f7fa;
-    color: #333;
+    background-color: var(--cor-fundo);
+    color: var(--cor-texto-principal);
+    transition: background-color 0.3s ease, color 0.3s ease;
 }
 
 .intranet-container {
     display: flex;
-    width: calc(100% - 40px); 
-    margin: 20px; 
-
+    width: calc(100% - 40px);
+    margin: 20px;
     border-radius: 12px;
-    overflow: hidden; 
-    box-shadow: 0 4px 12px rgba(0,0,0,0.08); 
+    overflow: hidden;
+    box-shadow: var(--sombra-card);
 }
 
 .coluna-nav .logo img {
@@ -26,8 +57,6 @@ body {
     margin-right: auto;
 }
 
-
-/* COLUNA 2: CONTEÚDO PRINCIPAL (Centro) */
 .coluna-conteudo {
     flex-grow: 1;
     padding: 30px;
@@ -56,20 +85,22 @@ body {
 }
 
 .widget {
-    background-color: #fff;
+    background-color: var(--cor-surface);
     padding: 20px;
     border-radius: 8px;
     margin-bottom: 20px;
-    box-shadow: 0 2px 4px rgba(0,0,0,0.05);
+    box-shadow: var(--sombra-card);
+    border: 1px solid var(--cor-borda);
 }
 
 .widget h3 {
     margin-top: 0;
     font-size: 1.1em;
-    border-bottom: 1px solid #eee;
+    border-bottom: 1px solid var(--cor-borda-suave);
     padding-bottom: 10px;
     margin-bottom: 15px;
     font-family: 'Montserrat', sans-serif;
+    color: var(--cor-texto-principal);
 }
 
 .coluna-nav.icon-nav .user-profile-area {
@@ -91,7 +122,7 @@ body {
 }
 
 .user-profile-trigger:hover {
-    background-color: #e0e0e0;
+    background-color: var(--cor-fundo-hover);
 }
 
 .coluna-nav.icon-nav #user-avatar {
@@ -147,34 +178,32 @@ body {
     width: 15px; /* Alinha o texto mesmo com ícone */
 }
 
-/* CSS para o novo Header */
 .header-principal {
     display: flex;
     justify-content: space-between;
     align-items: center;
-    padding: 40px 20px;
-    background-color: #000000; /* Cor escura como no exemplo */
-    color: white;
+    padding: 0 20px;
+    background-color: #2a3f54; 
+    color: var(--cor-texto-invertido);
     height: 60px;
 }
-
 .header-controles button {
     background: none;
     border: 1px solid #555;
-    color: white;
+    color: var(--cor-texto-invertido);
     padding: 5px 10px;
     cursor: pointer;
     border-radius: 4px;
 }
 
 .coluna-nav.icon-nav {
-    flex: 0 0 100px; /* Deixa a barra mais estreita */
-    background-color: #f4f7fa; /* Um cinza claro como no exemplo */
+    flex: 0 0 100px;
+    background-color: var(--cor-surface);
     padding: 20px 0;
-    border-right: 1px solid #e0e0e0;
+    border-right: 1px solid var(--cor-borda);
     display: flex;
     flex-direction: column;
-    align-items: center; /* Centraliza os itens */
+    align-items: center;
 }
 
 .coluna-nav.icon-nav .menu-principal ul {
@@ -212,13 +241,12 @@ body {
 
 /* Efeito ao passar o mouse */
 .coluna-nav.icon-nav .menu-principal li a:hover {
-    background-color: #e0e0e0;
+    background-color: var(--cor-fundo-hover);
 }
 
-/* Estilo do item ATIVO (como o "Dashboard" na imagem) */
 .coluna-nav.icon-nav .menu-principal li.ativo a {
-    background-color: #1a5bbc; /* Cor verde-água do exemplo */
-    color: #ffffff;
+    background-color: var(--cor-destaque);
+    color: var(--cor-texto-invertido);
 }
 
 /* Área do usuário (ajustes) */
@@ -229,18 +257,14 @@ body {
     border-top: 1px solid #e0e0e0;
 }
 
-/* Em layout.css -- Adicionar no final */
-
-/* Contêiner que cria as duas colunas */
 .conteudo-dividido {
     display: flex;
-    gap: 30px; /* Espaço entre as duas colunas */
+    gap: 30px; 
     margin-top: 30px;
 }
 
-/* Coluna da esquerda (Projetos) */
 .coluna-esquerda-conteudo {
-    flex: 2; /* Faz esta coluna ser 2x maior que a da direita */
+    flex: 2; 
     display: flex;
     flex-direction: column;
 }
@@ -283,12 +307,13 @@ body {
     margin-bottom: 30px;
 }
 .calendario-principal {
-    flex: 2; /* Ocupa 2/3 do espaço */
-    background-color: #fff;
+    flex: 2; 
+    background-color: var(--cor-surface);
     padding: 20px;
     border-radius: 8px;
-    box-shadow: 0 4px 12px rgba(0,0,0,0.05);
+    box-shadow: var(--sombra-card);
     min-width: 600px;
+    border: 1px solid var(--cor-borda);
 }
 .proximos-eventos {
     flex: 1; /* Ocupa 1/3 do espaço */

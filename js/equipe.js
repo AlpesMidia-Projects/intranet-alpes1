@@ -1,4 +1,5 @@
 // js/equipe.js
+import { API_BASE_URL } from './config.js'; 
 
 export async function carregarFuncionarios() {
   const container = document.getElementById('equipe-container');
@@ -6,7 +7,7 @@ export async function carregarFuncionarios() {
 
   try {
     // 1. CHAMA A NOSSA NOVA API DO DJANGO
-    const response = await fetch('http://127.0.0.1:8000/api/equipe/');
+    const response = await fetch(`${API_BASE_URL}/api/equipe/`);
 
     if (!response.ok) {
       throw new Error(`Erro na rede: ${response.statusText}`);

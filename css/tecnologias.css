@@ -1,8 +1,3 @@
-/* css/tecnologias.css - VERSÃO FINAL E CORRIGIDA */
-
-/* ================================== */
-/* ESTILOS DO ACCORDION               */
-/* ================================== */
 .accordion-container {
   max-width: 900px;
   margin: 40px auto;
@@ -56,7 +51,6 @@
   text-shadow: 1px 1px 2px rgba(0,0,0,0.5);
 }
 
-/* Backdrops personalizados para cada ferramenta */
 .chatgpt-bg {
   background-image: linear-gradient(rgba(0,0,0,0.5), rgba(0,0,0,0.5)), url('../imagens/backdrop-chatgpt.jpg');
 }

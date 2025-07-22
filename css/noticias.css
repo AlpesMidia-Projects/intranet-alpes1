@@ -4,20 +4,20 @@
 
 .noticias-grid {
     display: grid;
-    /* Cria colunas que se ajustam ao tamanho da tela */
     grid-template-columns: repeat(auto-fill, minmax(320px, 1fr));
-    gap: 30px; /* Espaço entre os cards de notícia */
+    gap: 30px; 
     padding-top: 20px;
 }
 
 .noticia-card {
-    background-color: #fff;
+    background-color: var(--cor-surface);
     border-radius: 12px;
-    box-shadow: 0 4px 12px rgba(0,0,0,0.08);
-    overflow: hidden; /* Garante que a imagem respeite as bordas arredondadas */
+    box-shadow: var(--sombra-card);
+    overflow: hidden; 
     display: flex;
     flex-direction: column;
     transition: transform 0.3s ease, box-shadow 0.3s ease;
+    border: 1px solid var(--cor-borda);
 }
 
 .noticia-card:hover {
@@ -41,12 +41,12 @@
 .noticia-content h3 {
     margin: 0 0 10px 0;
     font-size: 1.3em;
-    color: #333;
+    color: var(--cor-texto-principal);
 }
 
 .noticia-content p {
     margin: 0 0 20px 0;
-    color: #666;
+    color: var(--cor-texto-secundario);
     flex-grow: 1; /* Empurra o rodapé do card para baixo */
 }
 
@@ -54,8 +54,8 @@
     display: flex;
     justify-content: space-between;
     font-size: 0.8em;
-    color: #999;
-    border-top: 1px solid #f0f0f0;
+    color: var(--cor-texto-terciario);
+    border-top: 1px solid var(--cor-borda-suave);
     padding-top: 10px;
 }
 
@@ -86,7 +86,7 @@
 }
 
 .popup-conteudo {
-    background-color: #fff;
+    background-color: var(--cor-surface);
     padding: 30px;
     border-radius: 12px;
     box-shadow: 0 5px 25px rgba(0,0,0,0.2);
@@ -100,12 +100,12 @@
 .popup-conteudo h3 {
     margin: 0 0 10px 0;
     font-size: 1.5em;
-    color: #1a5bbc; /* Azul do seu tema */
+    color: var(--cor-destaque);
 }
 
 .popup-conteudo p {
     font-size: 1.1em;
-    color: #555;
+    color: var(--cor-texto-secundario);
     margin: 0 0 25px 0;
 }
 
@@ -115,17 +115,17 @@
     right: 15px;
     font-size: 28px;
     font-weight: bold;
-    color: #aaa;
+    color: var(--cor-texto-terciario);
     cursor: pointer;
     transition: color 0.2s ease;
 }
 
 .popup-fechar:hover {
-    color: #333;
+    color: var(--cor-texto-principal);
 }
 
 #popup-ver-noticia {
-    background-color: #1a5bbc;
+    background-color: var(--cor-destaque);
     color: white;
     border: none;
     padding: 12px 25px;
@@ -137,7 +137,7 @@
 }
 
 #popup-ver-noticia:hover {
-    background-color: #134288;
+    background-color: var(--cor-destaque-hover);
 }
 
 /* Animações usadas no popup */

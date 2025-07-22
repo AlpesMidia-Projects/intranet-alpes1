@@ -1,3 +1,4 @@
+import { API_BASE_URL } from './config.js'; 
 import { supabase } from '/js/supabaseClient.js';
 function atualizarMensagemDeBoasVindas(session) {
     if (!session) return; // Se não há sessão, não faz nada
@@ -15,7 +16,7 @@ async function carregarAniversariantes() {
     if (!container) return;
 
     try {
-        const response = await fetch('http://127.0.0.1:8000/api/equipe/');
+        const response = await fetch(`${API_BASE_URL}/api/equipe/`);
         if (!response.ok) throw new Error('Falha ao buscar funcionários');
         const funcionarios = await response.json();
 
@@ -67,7 +68,7 @@ async function carregarEventosDoCalendario(session) {
     }
 
     try {
-        const response = await fetch('http://127.0.0.1:8000/api/calendar-events/', {
+        const response = await fetch(`${API_BASE_URL}/api/calendar-events/`, {
             headers: { 'Authorization': `Bearer ${session.provider_token}` }
         });
         if (!response.ok) throw new Error('Falha ao buscar eventos');
@@ -133,7 +134,7 @@ async function carregarProjetos() {
     const container = document.getElementById('projetos-container');
     if (!container) return;
     try {
-        const response = await fetch('http://127.0.0.1:8000/api/projetos/');
+        const response = await fetch(`${API_BASE_URL}/api/projetos/`);
         if (!response.ok) throw new Error('Falha ao buscar projetos');
         const projetos = await response.json();
         

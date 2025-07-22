@@ -30,7 +30,7 @@
 
 .aniversariante-data-tag {
     margin-left: auto; /* Empurra a data para a direita */
-    background-color: #1abc9c; /* Cor turquesa do modelo */
+    background-color: var(--cor-destaque);
     color: white;
     font-size: 0.8em;
     font-weight: bold;
