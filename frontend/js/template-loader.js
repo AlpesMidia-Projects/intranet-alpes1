@@ -93,6 +93,7 @@ async function initializePage() {
     initializeUIButtons();
     verificarNoticiasNovas();
     initializeThemeSwitcher();
+    carregarPostsRecentes();
 }
 
 function initializeUIButtons() {
@@ -176,6 +177,35 @@ function initializeThemeSwitcher() {
             localStorage.setItem('theme', 'light'); // Salva a escolha
         }
     });
+}
+
+async function carregarPostsRecentes() {
+    const container = document.getElementById('posts-recentes-container');
+    if (!container) return;
+
+    try {
+        const response = await fetch(`${API_BASE_URL}/api/noticias-recentes/`);
+        const noticias = await response.json();
+
+        container.innerHTML = '';
+        if (noticias.length === 0) {
+            container.innerHTML = '<p>Nenhuma notícia recente.</p>';
+            return;
+        }
+
+        const lista = document.createElement('ul');
+        lista.className = 'lista-posts-recentes';
+        noticias.forEach(noticia => {
+            const item = document.createElement('li');
+            item.innerHTML = `<a href="/noticias.html">${noticia.titulo}</a>`;
+            lista.appendChild(item);
+        });
+        container.appendChild(lista);
+
+    } catch (error) {
+        console.error("Erro ao carregar posts recentes:", error);
+        container.innerHTML = '<p style="color:red;">Erro ao carregar.</p>';
+    }
 }
 
 // Inicia todo o processo quando a estrutura da página estiver pronta

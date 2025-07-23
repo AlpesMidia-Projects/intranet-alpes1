@@ -15,4 +15,5 @@ urlpatterns = [
     path('historico-audios/', views.get_historico_audios, name='get_historico_audios'),
     path('equipe/', views.get_funcionarios, name='get_equipe'),
     path('noticias/', views.get_noticias_ativas, name='api-noticias'),
+    path('noticias-recentes/', views.get_noticias_recentes, name='api-noticias-recentes'),
 ]

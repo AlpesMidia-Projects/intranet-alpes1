@@ -150,3 +150,26 @@
   from { transform: translateY(-30px); opacity: 0; }
   to { transform: translateY(0); opacity: 1; }
 }
+
+/* Estilo para a lista de posts recentes no widget */
+.lista-posts-recentes {
+    list-style: none;
+    padding: 0;
+    margin: 0;
+}
+.lista-posts-recentes li {
+    padding: 10px 0;
+    border-bottom: 1px solid var(--cor-borda-suave);
+}
+.lista-posts-recentes li:last-child {
+    border-bottom: none;
+}
+.lista-posts-recentes a {
+    text-decoration: none;
+    color: var(--cor-texto-principal);
+    font-weight: bold;
+    transition: color 0.2s ease;
+}
+.lista-posts-recentes a:hover {
+    color: var(--cor-destaque);
+}

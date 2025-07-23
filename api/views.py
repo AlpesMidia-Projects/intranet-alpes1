@@ -221,3 +221,18 @@ from django.http import JsonResponse
 
 def health_check(request):
     return JsonResponse({"status": "ok", "message": "Django está respondendo!"})
+
+@api_view(['GET'])
+def get_noticias_recentes(request):
+    """
+    Retorna as 4 notícias mais recentes que estão ativas.
+    """
+    hoje = timezone.now()
+    noticias = Noticia.objects.filter(
+        data_inicio_publicacao__lte=hoje
+    ).exclude(
+        data_fim_publicacao__lt=hoje
+    ).order_by('-data_publicacao')[:4] # Ordena pela mais nova e pega as 4 primeiras
+
+    serializer = NoticiaSerializer(noticias, many=True)
+    return Response(serializer.data)
