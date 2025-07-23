@@ -1,6 +1,6 @@
 # serializers.py
 from rest_framework import serializers
-from .models import Funcionario, Projeto, Noticia
+from .models import Funcionario, Projeto, Noticia, Enquete, OpcaoEnquete
 
 class FuncionarioSerializer(serializers.ModelSerializer):
     class Meta:
@@ -17,3 +17,15 @@ class NoticiaSerializer(serializers.ModelSerializer):
     class Meta:
         model = Noticia
         fields = '__all__'
+
+class OpcaoEnqueteSerializer(serializers.ModelSerializer):
+    class Meta:
+        model = OpcaoEnquete
+        fields = ['id', 'texto_opcao', 'votos']
+
+class EnqueteSerializer(serializers.ModelSerializer):
+    opcoes = OpcaoEnqueteSerializer(many=True, read_only=True)
+
+    class Meta:
+        model = Enquete
+        fields = ['id', 'pergunta', 'opcoes']

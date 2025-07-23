@@ -16,4 +16,6 @@ urlpatterns = [
     path('equipe/', views.get_funcionarios, name='get_equipe'),
     path('noticias/', views.get_noticias_ativas, name='api-noticias'),
     path('noticias-recentes/', views.get_noticias_recentes, name='api-noticias-recentes'),
+    path('enquete-ativa/', views.get_enquete_ativa, name='api-enquete-ativa'),
+    path('opcoes/<int:pk>/votar/', views.votar_enquete, name='api-votar-enquete'),
 ]

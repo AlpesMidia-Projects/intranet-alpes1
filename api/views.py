@@ -21,6 +21,7 @@ from .serializers import FuncionarioSerializer, ProjetoSerializer
 from datetime import datetime
 from .models import Noticia
 from .serializers import NoticiaSerializer
+from django.db.models import F
 
 load_dotenv()
 
@@ -236,3 +237,35 @@ def get_noticias_recentes(request):
 
     serializer = NoticiaSerializer(noticias, many=True)
     return Response(serializer.data)
+
+@api_view(['GET'])
+def get_enquete_ativa(request):
+    """
+    Busca a primeira enquete marcada como 'ativa' no banco de dados.
+    """
+    try:
+        # Pega a primeira enquete que encontrar com ativa=True
+        enquete = Enquete.objects.filter(ativa=True).first()
+        if enquete:
+            serializer = EnqueteSerializer(enquete)
+            return Response(serializer.data)
+        # Se não encontrar nenhuma, retorna uma resposta vazia
+        return Response({})
+    except Enquete.DoesNotExist:
+        return Response({})
+
+@api_view(['POST'])
+def votar_enquete(request, pk):
+    """
+    Recebe um voto para uma opção de enquete específica.
+    'pk' é o ID da opção que foi votada.
+    """
+    # Garante que a opção existe, senão retorna erro 404
+    opcao = get_object_or_404(OpcaoEnquete, pk=pk)
+    
+    # Incrementa o voto de forma segura, evitando 'race conditions'
+    opcao.votos = F('votos') + 1
+    opcao.save()
+    
+    # Retorna uma mensagem de sucesso
+    return Response({'status': 'voto computado'})
