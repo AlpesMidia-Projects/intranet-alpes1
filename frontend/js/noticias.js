@@ -1,6 +1,5 @@
-// js/noticias.js
-
 import { API_BASE_URL } from './config.js'; 
+
 async function carregarNoticias() {
     const container = document.getElementById('noticias-container');
     if (!container) return;
