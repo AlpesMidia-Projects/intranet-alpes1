@@ -28,7 +28,9 @@
 /* Importação dos estilos da página de Noticias*/
 @import url('noticias.css');
 /* Importação dos estilos da função dark-light*/
-@import url('dark-light.css');
+@import url('darklight.css');
+/* Importação dos estilos da função Enquete*/
+@import url('enquete.css');
 
 
 

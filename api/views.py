@@ -16,12 +16,11 @@ from googleapiclient.discovery import build
 from google.oauth2.credentials import Credentials
 from rest_framework.decorators import api_view
 from rest_framework.response import Response
-from .models import Funcionario, Projeto
-from .serializers import FuncionarioSerializer, ProjetoSerializer
+from .models import Funcionario, Projeto, Noticia, Enquete, OpcaoEnquete
+from .serializers import FuncionarioSerializer, ProjetoSerializer, NoticiaSerializer, EnqueteSerializer
 from datetime import datetime
-from .models import Noticia
-from .serializers import NoticiaSerializer
 from django.db.models import F
+from django.shortcuts import get_object_or_404
 
 load_dotenv()
 

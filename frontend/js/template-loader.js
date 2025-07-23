@@ -81,6 +81,106 @@ async function updateUserStatus() {
     }
 }
 
+async function carregarEnquete() {
+    const container = document.getElementById('enquete-container');
+    if (!container) return;
+
+    try {
+        const response = await fetch(`${API_BASE_URL}/api/enquete-ativa/`);
+        const enquete = await response.json();
+
+        // Se não houver enquete ativa, exibe uma mensagem e para.
+        if (!enquete || !enquete.id) {
+            container.innerHTML = '<p>Nenhuma enquete ativa no momento.</p>';
+            return;
+        }
+
+        const enqueteId = `votou_enquete_${enquete.id}`;
+        const jaVotou = localStorage.getItem(enqueteId);
+
+        // Define o título da enquete
+        container.innerHTML = `<p class="enquete-pergunta">${enquete.pergunta}</p>`;
+
+        if (jaVotou) {
+            // Se já votou, mostra os resultados
+            mostrarResultados(enquete);
+        } else {
+            // Se não votou, mostra as opções
+            mostrarOpcoes(enquete);
+        }
+
+    } catch (error) {
+        console.error("Erro ao carregar enquete:", error);
+        container.innerHTML = '<p style="color:red;">Erro ao carregar enquete.</p>';
+    }
+}
+
+function mostrarOpcoes(enquete) {
+    const container = document.getElementById('enquete-container');
+    const form = document.createElement('form');
+    form.className = 'enquete-form';
+    
+    enquete.opcoes.forEach(opcao => {
+        form.innerHTML += `
+            <div class="enquete-opcao">
+                <input type="radio" name="enquete" id="opcao-${opcao.id}" value="${opcao.id}">
+                <label for="opcao-${opcao.id}">${opcao.texto_opcao}</label>
+            </div>
+        `;
+    });
+
+    const botaoVotar = document.createElement('button');
+    botaoVotar.type = 'submit';
+    botaoVotar.textContent = 'Votar';
+    form.appendChild(botaoVotar);
+    container.appendChild(form);
+
+    form.addEventListener('submit', async (e) => {
+        e.preventDefault();
+        const opcaoSelecionada = form.querySelector('input[name="enquete"]:checked');
+        if (!opcaoSelecionada) {
+            alert('Por favor, selecione uma opção.');
+            return;
+        }
+        
+        // Envia o voto para a API
+        await fetch(`${API_BASE_URL}/api/opcoes/${opcaoSelecionada.value}/votar/`, { method: 'POST' });
+        
+        // Marca no localStorage que o usuário votou
+        localStorage.setItem(`votou_enquete_${enquete.id}`, 'true');
+        
+        // Atualiza a visualização para mostrar os resultados
+        carregarEnquete(); 
+    });
+}
+
+function mostrarResultados(enquete) {
+    const container = document.getElementById('enquete-container');
+    const resultadosDiv = document.createElement('div');
+    resultadosDiv.className = 'enquete-resultados';
+
+    let totalVotos = 0;
+    enquete.opcoes.forEach(opcao => totalVotos += opcao.votos);
+    if (totalVotos === 0) totalVotos = 1; // Evita divisão por zero
+
+    enquete.opcoes.forEach(opcao => {
+        const porcentagem = Math.round((opcao.votos / totalVotos) * 100);
+        resultadosDiv.innerHTML += `
+            <div class="resultado-item">
+                <div class="resultado-info">
+                    <span>${opcao.texto_opcao}</span>
+                    <span>${porcentagem}%</span>
+                </div>
+                <div class="resultado-barra-fundo">
+                    <div class="resultado-barra-preenchimento" style="width: ${porcentagem}%;"></div>
+                </div>
+            </div>
+        `;
+    });
+    
+    container.appendChild(resultadosDiv);
+}
+
 async function initializePage() {
     await Promise.all([
         loadComponent('/_header.html', 'header-placeholder'),
@@ -94,6 +194,7 @@ async function initializePage() {
     verificarNoticiasNovas();
     initializeThemeSwitcher();
     carregarPostsRecentes();
+    carregarEnquete();
 }
 
 function initializeUIButtons() {
