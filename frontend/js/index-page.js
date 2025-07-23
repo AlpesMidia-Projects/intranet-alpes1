@@ -20,11 +20,17 @@ async function carregarAniversariantes() {
         if (!response.ok) throw new Error('Falha ao buscar funcionários');
         const funcionarios = await response.json();
 
-        const mesAtual = new Date().getMonth();
+        const mesAtual = new Date().getMonth(); 
+
         const aniversariantes = funcionarios.filter(func => {
-            if (!func.aniversario) return false;
-            const dataAniversario = new Date(func.aniversario);
-            return dataAniversario.getUTCMonth() === mesAtual;
+            if (!func.aniversario || typeof func.aniversario !== 'string') {
+                return false;
+            }
+            
+            const partesData = func.aniversario.split('-'); 
+            const mesAniversario = parseInt(partesData[1], 10) - 1; 
+
+            return mesAniversario === mesAtual;
         });
 
         container.innerHTML = ''; // Limpa o container
@@ -33,15 +39,20 @@ async function carregarAniversariantes() {
             return;
         }
 
-        // Mape para ordenar por dia do mês
-        aniversariantes.sort((a, b) => new Date(a.aniversario).getUTCDate() - new Date(b.aniversario).getUTCDate());
+        // Ordena por dia do mês
+        aniversariantes.sort((a, b) => {
+            const diaA = parseInt(a.aniversario.split('-')[2], 10);
+            const diaB = parseInt(b.aniversario.split('-')[2], 10);
+            return diaA - diaB;
+        });
 
         aniversariantes.forEach(func => {
-            const dataAniversario = new Date(func.aniversario + 'T00:00:00');
-            // Formata a data como "Mês Dia" (ex: "Jul 17")
-            const dataFormatada = dataAniversario.toLocaleString('pt-BR', { month: 'short', day: '2-digit' }).replace('.', '');
+            const partesData = func.aniversario.split('-');
+            const dia = partesData[2];
+            const mesNumero = parseInt(partesData[1], 10);
+            const nomeMes = new Date(2000, mesNumero - 1, 1).toLocaleString('pt-BR', { month: 'short' }).replace('.', '');
+            const dataFormatada = `${dia} de ${nomeMes}`;
 
-            // NOVA ESTRUTURA HTML (MAIS SIMPLES)
             const itemHTML = `
                 <div class="aniversariante-item">
                     <img class="aniversariante-avatar" src="${func.imagem_url || 'imagens/avatar-padrao.png'}" alt="Foto de ${func.nome}">
