@@ -139,7 +139,8 @@ DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
 CORS_ALLOWED_ORIGINS = [
     "http://127.0.0.1:5500",  
     "http://localhost:5500",
-    "http://192.168.55.10:5500",   
+    "http://192.168.55.10:5500",  
+    "https://intranet-alpes1-frontend.onrender.com", 
 ]
 
 # Lista de métodos permitidos (NOVO)
