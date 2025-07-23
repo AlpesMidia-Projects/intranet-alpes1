@@ -172,3 +172,8 @@ if 'DATABASE_URL' in os.environ:
 # Configuração de arquivos estáticos para produção
 STATIC_ROOT = os.path.join(BASE_DIR, 'staticfiles')
 STATICFILES_STORAGE = 'whitenoise.storage.CompressedManifestStaticFilesStorage'
+
+# Redireciona para o frontend após login com Google
+LOGIN_REDIRECT_URL = 'https://intranet-alpes1-frontend.onrender.com'
+
+LOGIN_URL = '/accounts/google/login/'
