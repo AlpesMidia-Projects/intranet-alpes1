@@ -11,64 +11,6 @@ function atualizarMensagemDeBoasVindas(session) {
     }
 }
 
-async function carregarAniversariantes() {
-    const container = document.getElementById('aniversariantes-container');
-    if (!container) return;
-
-    try {
-        const response = await fetch(`${API_BASE_URL}/api/equipe/`);
-        if (!response.ok) throw new Error('Falha ao buscar funcionários');
-        const funcionarios = await response.json();
-
-        const mesAtual = new Date().getMonth(); 
-
-        const aniversariantes = funcionarios.filter(func => {
-            if (!func.aniversario || typeof func.aniversario !== 'string') {
-                return false;
-            }
-            
-            const partesData = func.aniversario.split('-'); 
-            const mesAniversario = parseInt(partesData[1], 10) - 1; 
-
-            return mesAniversario === mesAtual;
-        });
-
-        container.innerHTML = ''; // Limpa o container
-        if (aniversariantes.length === 0) {
-            container.innerHTML = '<p>Nenhum aniversariante este mês.</p>';
-            return;
-        }
-
-        // Ordena por dia do mês
-        aniversariantes.sort((a, b) => {
-            const diaA = parseInt(a.aniversario.split('-')[2], 10);
-            const diaB = parseInt(b.aniversario.split('-')[2], 10);
-            return diaA - diaB;
-        });
-
-        aniversariantes.forEach(func => {
-            const partesData = func.aniversario.split('-');
-            const dia = partesData[2];
-            const mesNumero = parseInt(partesData[1], 10);
-            const nomeMes = new Date(2000, mesNumero - 1, 1).toLocaleString('pt-BR', { month: 'short' }).replace('.', '');
-            const dataFormatada = `${dia} de ${nomeMes}`;
-
-            const itemHTML = `
-                <div class="aniversariante-item">
-                    <img class="aniversariante-avatar" src="${func.imagem_url || 'imagens/avatar-padrao.png'}" alt="Foto de ${func.nome}">
-                    <span class="aniversariante-nome">${func.nome}</span>
-                    <span class="aniversariante-data-tag">${dataFormatada}</span>
-                </div>
-            `;
-            container.innerHTML += itemHTML;
-        });
-
-    } catch (error) {
-        console.error("Erro ao carregar aniversariantes:", error);
-        container.innerHTML = '<p style="color:red;">Erro ao carregar.</p>';
-    }
-}
-
 async function carregarEventosDoCalendario(session) {
     const calendarEl = document.getElementById('meu-calendario-container');
     const listaEventosEl = document.getElementById('lista-eventos-container');
@@ -210,7 +152,6 @@ document.addEventListener('DOMContentLoaded', async () => {
     const { data: { session } } = await supabase.auth.getSession();
 
     // Chama todas as funções de carregamento
-    carregarAniversariantes();
     carregarEventosDoCalendario(session);
     carregarProjetos();
     

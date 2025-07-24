@@ -181,21 +181,62 @@ function mostrarResultados(enquete) {
     container.appendChild(resultadosDiv);
 }
 
-async function initializePage() {
-    await Promise.all([
-        loadComponent('/_header.html', 'header-placeholder'),
-        loadComponent('/_nav-sidebar.html', 'sidebar-placeholder'),
-        loadComponent('/_widgets-sidebar.html', 'widgets-placeholder'),
-        loadComponent('/_footer.html', 'footer-placeholder')
-    ]);
+async function carregarAniversariantes() {
+    const container = document.getElementById('aniversariantes-container');
+    if (!container) return;
 
-    setActiveNav();
-    updateUserStatus();
-    initializeUIButtons();
-    verificarNoticiasNovas();
-    initializeThemeSwitcher();
-    carregarPostsRecentes();
-    carregarEnquete();
+    try {
+        const response = await fetch(`${API_BASE_URL}/api/equipe/`);
+        if (!response.ok) throw new Error('Falha ao buscar funcionários');
+        const funcionarios = await response.json();
+
+        const mesAtual = new Date().getMonth(); 
+
+        const aniversariantes = funcionarios.filter(func => {
+            if (!func.aniversario || typeof func.aniversario !== 'string') {
+                return false;
+            }
+            
+            const partesData = func.aniversario.split('-'); 
+            const mesAniversario = parseInt(partesData[1], 10) - 1; 
+
+            return mesAniversario === mesAtual;
+        });
+
+        container.innerHTML = ''; // Limpa o container
+        if (aniversariantes.length === 0) {
+            container.innerHTML = '<p>Nenhum aniversariante este mês.</p>';
+            return;
+        }
+
+        // Ordena por dia do mês
+        aniversariantes.sort((a, b) => {
+            const diaA = parseInt(a.aniversario.split('-')[2], 10);
+            const diaB = parseInt(b.aniversario.split('-')[2], 10);
+            return diaA - diaB;
+        });
+
+        aniversariantes.forEach(func => {
+            const partesData = func.aniversario.split('-');
+            const dia = partesData[2];
+            const mesNumero = parseInt(partesData[1], 10);
+            const nomeMes = new Date(2000, mesNumero - 1, 1).toLocaleString('pt-BR', { month: 'short' }).replace('.', '');
+            const dataFormatada = `${dia} de ${nomeMes}`;
+
+            const itemHTML = `
+                <div class="aniversariante-item">
+                    <img class="aniversariante-avatar" src="${func.imagem_url || 'imagens/avatar-padrao.png'}" alt="Foto de ${func.nome}">
+                    <span class="aniversariante-nome">${func.nome}</span>
+                    <span class="aniversariante-data-tag">${dataFormatada}</span>
+                </div>
+            `;
+            container.innerHTML += itemHTML;
+        });
+
+    } catch (error) {
+        console.error("Erro ao carregar aniversariantes:", error);
+        container.innerHTML = '<p style="color:red;">Erro ao carregar.</p>';
+    }
 }
 
 function initializeUIButtons() {
@@ -308,6 +349,24 @@ async function carregarPostsRecentes() {
         console.error("Erro ao carregar posts recentes:", error);
         container.innerHTML = '<p style="color:red;">Erro ao carregar.</p>';
     }
+}
+
+async function initializePage() {
+    await Promise.all([
+        loadComponent('/_header.html', 'header-placeholder'),
+        loadComponent('/_nav-sidebar.html', 'sidebar-placeholder'),
+        loadComponent('/_widgets-sidebar.html', 'widgets-placeholder'),
+        loadComponent('/_footer.html', 'footer-placeholder')
+    ]);
+
+    setActiveNav();
+    updateUserStatus();
+    initializeUIButtons();
+    verificarNoticiasNovas();
+    initializeThemeSwitcher();
+    carregarPostsRecentes();
+    carregarEnquete();
+    carregarAniversariantes();
 }
 
 // Inicia todo o processo quando a estrutura da página estiver pronta
