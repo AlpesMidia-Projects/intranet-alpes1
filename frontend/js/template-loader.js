@@ -185,7 +185,8 @@ async function initializePage() {
     await Promise.all([
         loadComponent('/_header.html', 'header-placeholder'),
         loadComponent('/_nav-sidebar.html', 'sidebar-placeholder'),
-        loadComponent('/_widgets-sidebar.html', 'widgets-placeholder')
+        loadComponent('/_widgets-sidebar.html', 'widgets-placeholder'),
+        loadComponent('/_footer.html', 'footer-placeholder')
     ]);
 
     setActiveNav();
