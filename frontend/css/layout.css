@@ -213,7 +213,7 @@ body {
     width: 100%;
 }
 
-.coluna-nav.icon-nav .menu-principal li a {
+.coluna-nav.icon-nav .menu-principal > li > a {
     display: flex;
     flex-direction: column;
     align-items: center;
@@ -381,58 +381,62 @@ body {
     display: block; /* Visível quando a classe for adicionada */
 }
 
-/* Em layout.css -- ADICIONE NO FINAL */
 
 /* ======================================================= */
-/* ESTILOS PARA O SUBMENU DA NAVEGAÇÃO                     */
+/* ESTILOS PARA O SUBMENU DA NAVEGAÇÃO (VERSÃO CORRIGIDA)  */
 /* ======================================================= */
 
-/* Relativo ao item principal do menu para posicionar o submenu */
 .nav-item.has-submenu {
     position: relative;
 }
 
-/* O submenu em si - escondido por padrão */
 .submenu {
     list-style: none;
     padding: 10px;
     margin: 0;
-    
-    position: absolute; /* Posição flutuante */
-    left: 100%; /* Começa exatamente onde a barra de navegação termina */
-    top: 0; /* Alinhado ao topo do item pai */
-    
-    width: 200px; /* Largura do submenu */
+    position: absolute;
+    left: 95%; /* Um pouco para a esquerda para uma pequena sobreposição */
+    top: 0;
+    min-width: 200px; /* Largura mínima, mas pode crescer */
     background-color: var(--cor-surface);
-    border-radius: 0 8px 8px 8px;
+    border-radius: 8px; /* Borda em todos os cantos */
     box-shadow: 5px 5px 15px rgba(0,0,0,0.1);
     border: 1px solid var(--cor-borda);
-    
-    /* Escondido por padrão */
     opacity: 0;
     visibility: hidden;
-    transform: translateX(10px); /* Levemente deslocado para um efeito de "surgir" */
+    transform: translateX(10px);
     transition: opacity 0.3s ease, visibility 0.3s ease, transform 0.3s ease;
-    z-index: 10;
+    z-index: 1000;
 }
 
-/* MOSTRA o submenu quando o mouse passa por cima do item pai */
 .nav-item.has-submenu:hover > .submenu {
     opacity: 1;
     visibility: visible;
     transform: translateX(0);
 }
 
-/* Estilo dos links dentro do submenu */
+/* Estilo dos itens DENTRO do submenu */
+.submenu li {
+    width: 100%; /* Garante que o item ocupe todo o espaço */
+}
+
+/* Estilo dos links DENTRO do submenu */
 .submenu li a {
-    display: block;
+    /* Reseta os estilos de flexbox do menu principal */
+    display: block; 
+    width: auto;
+    height: auto;
+    margin: 0;
+
+    /* Estilos específicos para o link do submenu */
     padding: 10px 15px;
     color: var(--cor-texto-secundario);
     text-decoration: none;
     border-radius: 5px;
     font-size: 14px;
     font-weight: bold;
-    white-space: nowrap; /* Impede que o texto quebre a linha */
+    white-space: nowrap;
+    text-align: left; /* Garante alinhamento à esquerda */
 }
 
 .submenu li a:hover {
