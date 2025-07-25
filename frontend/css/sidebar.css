@@ -23,9 +23,9 @@
 }
 
 /* Aplica apenas aos botões do menu principal */
-.coluna-nav.icon-nav .menu-principal > li > a {
+body .intranet-container .coluna-nav.icon-nav .menu-principal > li > a {
     display: flex;
-    flex-direction: column;
+    flex-direction: column; /* <-- A regra mais importante! */
     align-items: center;
     justify-content: center;
     text-decoration: none;
