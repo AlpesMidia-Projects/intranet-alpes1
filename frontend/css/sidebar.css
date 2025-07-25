@@ -1,4 +1,8 @@
 .coluna-nav.icon-nav {
+    width: 70px !important;
+    min-width: 70px;
+    max-width: 70px;
+
     flex: 0 0 100px;
     background-color: var(--cor-surface);
     padding: 20px 0;
@@ -69,12 +73,29 @@
 
 .submenu {
     list-style: none;
-    padding: 10px;
+    padding: 6px;
     margin: 0;
     position: absolute;
-    left: 95%;
+    left: 100%;
+    top: 50%;
+    min-width: 130px;
+    background-color: var(--cor-surface);
+    border-radius: 8px;
+    box-shadow: 5px 5px 15px rgba(0,0,0,0.1);
+    border: 1px solid var(--cor-borda);
+    opacity: 0;
+    visibility: hidden;
+    transform: translate(10px, -50%);
+    transition: opacity 0.3s ease, visibility 0.3s ease, transform 0.3s ease;
+    z-index: 1000;
+
+    list-style: none;
+    padding: 6px;
+    margin: 0;
+    position: absolute;
+    left: 100%;
     top: 0;
-    min-width: 200px;
+    min-width: 130px;
     background-color: var(--cor-surface);
     border-radius: 8px;
     box-shadow: 5px 5px 15px rgba(0,0,0,0.1);
@@ -87,6 +108,23 @@
 }
 
 .nav-item.has-submenu:hover > .submenu {
+    list-style: none;
+    padding: 6px;
+    margin: 0;
+    position: absolute;
+    left: 100%;
+    top: 50%;
+    min-width: 130px;
+    background-color: var(--cor-surface);
+    border-radius: 8px;
+    box-shadow: 5px 5px 15px rgba(0,0,0,0.1);
+    border: 1px solid var(--cor-borda);
+    opacity: 0;
+    visibility: hidden;
+    transform: translate(10px, -50%);
+    transition: opacity 0.3s ease, visibility 0.3s ease, transform 0.3s ease;
+    z-index: 1000;
+
     opacity: 1;
     visibility: visible;
     transform: translateX(0);
@@ -97,6 +135,16 @@
 }
 
 .submenu li a {
+    display: block; 
+    padding: 8px 12px;
+    font-size: 13px;
+    font-weight: 500;
+    color: var(--cor-texto-secundario);
+    text-decoration: none;
+    border-radius: 5px;
+    white-space: nowrap;
+    text-align: left;
+
     display: block; 
     width: auto;
     height: auto;
