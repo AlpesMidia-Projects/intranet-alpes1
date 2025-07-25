@@ -31,6 +31,7 @@
 @import url('darklight.css');
 /* Importação dos estilos da função Enquete*/
 @import url('enquete.css');
-
+/* Importação dos estilos da Barra SideBar */
+@import url('sidebar.css');
 
 
