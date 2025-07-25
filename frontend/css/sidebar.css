@@ -29,16 +29,15 @@
     width: 60px;
     padding: 10px 0;
     margin: 0 auto 15px auto;
-
     display: flex;
-    flex-direction: column; /* <-- A regra mais importante! */
+    flex-direction: column; 
     align-items: center;
     justify-content: center;
     text-decoration: none;
     color: var(--cor-texto-secundario);
     border-radius: 8px;
     transition: background-color 0.2s ease-in-out;
-    width: 80px;  
+    width: 100px;  
     height: 80px; 
     padding: 0;   
     margin: 0 auto 15px auto; 
