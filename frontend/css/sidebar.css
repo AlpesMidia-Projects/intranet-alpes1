@@ -1,9 +1,3 @@
-/* ======================================================= */
-/* ARQUIVO: sidebar.css                                    */
-/* Contém todos os estilos para a barra de navegação lateral */
-/* ======================================================= */
-
-/* --- ESTRUTURA PRINCIPAL DA BARRA --- */
 .coluna-nav.icon-nav {
     flex: 0 0 100px;
     background-color: var(--cor-surface);
@@ -23,9 +17,9 @@
 }
 
 /* Aplica apenas aos botões do menu principal */
-body .intranet-container .coluna-nav.icon-nav .menu-principal > li > a {
+.coluna-nav.icon-nav .menu-principal ul > li > a {
     display: flex;
-    flex-direction: column; /* <-- A regra mais importante! */
+    flex-direction: column !important;
     align-items: center;
     justify-content: center;
     text-decoration: none;
