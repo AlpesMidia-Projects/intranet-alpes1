@@ -1,0 +1,68 @@
+/* css/aniversariantes-page.css */
+
+.aniversariantes-swiper {
+    width: 100%;
+    padding-top: 20px;
+    padding-bottom: 50px; /* Espaço para a paginação */
+}
+
+.swiper-slide {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.aniversariante-card {
+    background-color: var(--cor-surface);
+    border-radius: 15px;
+    box-shadow: var(--sombra-card);
+    text-align: center;
+    padding: 30px 20px;
+    width: 300px;
+    border-top: 5px solid var(--cor-destaque-secundario);
+}
+
+.aniversariante-foto {
+    width: 120px;
+    height: 120px;
+    border-radius: 50%;
+    overflow: hidden;
+    margin: 0 auto 20px auto;
+    border: 4px solid var(--cor-surface);
+    box-shadow: 0 0 15px rgba(0,0,0,0.2);
+}
+
+.aniversariante-foto img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+}
+
+.aniversariante-nome {
+    font-size: 1.4em;
+    font-weight: bold;
+    color: var(--cor-texto-principal);
+    margin: 0;
+}
+
+.aniversariante-cargo {
+    font-size: 1em;
+    color: var(--cor-texto-secundario);
+    margin: 5px 0 15px 0;
+}
+
+.aniversariante-dia {
+    font-size: 1.2em;
+    font-weight: bold;
+    color: var(--cor-destaque);
+    margin: 0;
+}
+
+/* Estilos para a navegação do Swiper */
+.swiper-button-next, .swiper-button-prev {
+    color: var(--cor-destaque);
+}
+
+.swiper-pagination-bullet-active {
+    background-color: var(--cor-destaque);
+}

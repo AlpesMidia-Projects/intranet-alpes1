@@ -8,7 +8,6 @@
 @import url('clientes.css');
 
 /* Importação dos componentes estruturais da página */
-@import url('nav.css');
 @import url('footer.css');
 
 /* Importação dos componentes de conteúdo específico */
@@ -32,5 +31,6 @@
 @import url('enquete.css');
 /* Importação dos estilos da Barra SideBar */
 @import url('sidebar.css');
-
+/*Importação dos estilos do HTML Aniversariantes */
+@import url('aniversariantes-page.css');
 
