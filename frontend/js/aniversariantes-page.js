@@ -34,18 +34,19 @@ async function carregarAniversariantesDoMes() {
             const partesData = func.aniversario.split('-');
             const dia = partesData[2];
             
+            // ATUALIZE AS CLASSES NESTE BLOCO
             const slideHTML = `
                 <div class="swiper-slide">
-                    <div class="aniversariante-card">
-                        <div class="aniversariante-foto">
+                    <div class="card-aniv-pagina">
+                        <div class="foto">
                             <img src="${func.imagem_url || 'imagens/avatar-padrao.png'}" alt="Foto de ${func.nome}">
                         </div>
-                        <h3 class="aniversariante-nome">${func.nome}</h3>
-                        <p class="aniversariante-cargo">${func.cargo || ''}</p>
-                        <p class="aniversariante-dia">Dia ${dia}</p>
+                        <h3 class="nome">${func.nome}</h3>
+                        <p class="cargo">${func.cargo || ''}</p>
+                        <p class="dia">Dia ${dia}</p>
                     </div>
                 </div>
-            `;
+                `;
             wrapper.innerHTML += slideHTML;
         });
 
