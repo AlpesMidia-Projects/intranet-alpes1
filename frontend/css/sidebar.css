@@ -1,6 +1,5 @@
 /* ======================================================= */
-/* ARQUIVO: sidebar.css                                    */
-/* Contém todos os estilos para a barra de navegação lateral */
+/* ARQUIVO: sidebar.css (VERSÃO FINAL E CORRIGIDA)         */
 /* ======================================================= */
 
 /* --- ESTRUTURA PRINCIPAL DA BARRA --- */
@@ -15,7 +14,7 @@
 }
 
 /* --- MENU PRINCIPAL E BOTÕES --- */
-.coluna-nav.icon-nav .menu-principal ul {
+.coluna-nav.icon-nav .menu-principal > ul {
     list-style: none;
     padding: 0;
     margin: 0;
@@ -23,7 +22,7 @@
 }
 
 /* Aplica apenas aos botões do menu principal */
-.coluna-nav.icon-nav .menu-principal > li > a {
+.coluna-nav.icon-nav .menu-principal > ul > li > a {
     display: flex;
     flex-direction: column;
     align-items: center;
@@ -32,28 +31,28 @@
     color: var(--cor-texto-secundario);
     border-radius: 8px;
     transition: background-color 0.2s ease-in-out, color 0.2s ease-in-out;
-    width: 80px;
-    height: 80px;
-    padding: 0;
-    margin: 0 auto 15px auto;
+    width: 80px;  
+    height: 80px; 
+    padding: 0;   
+    margin: 0 auto 15px auto; 
 }
 
-.coluna-nav.icon-nav .menu-principal > li > a i {
-    font-size: 24px;
-    margin-bottom: 8px;
+.coluna-nav.icon-nav .menu-principal > ul > li > a i {
+    font-size: 24px; 
+    margin-bottom: 8px; 
 }
 
-.coluna-nav.icon-nav .menu-principal > li > a span {
+.coluna-nav.icon-nav .menu-principal > ul > li > a span {
     font-size: 12px;
     font-weight: bold;
 }
 
-.coluna-nav.icon-nav .menu-principal > li > a:hover {
+.coluna-nav.icon-nav .menu-principal > ul > li > a:hover {
     background-color: var(--cor-fundo-hover);
     color: var(--cor-destaque);
 }
 
-.coluna-nav.icon-nav .menu-principal > li.ativo > a {
+.coluna-nav.icon-nav .menu-principal > ul > li.ativo > a {
     background-color: var(--cor-destaque);
     color: var(--cor-texto-invertido);
 }
@@ -69,7 +68,7 @@
     margin: 0;
     position: absolute;
     left: 95%;
-    top: 50%; /* Centraliza verticalmente em relação ao botão */
+    top: 50%;
     min-width: 150px;
     background-color: var(--cor-surface);
     border-radius: 8px;
@@ -77,7 +76,7 @@
     border: 1px solid var(--cor-borda);
     opacity: 0;
     visibility: hidden;
-    transform: translate(10px, -50%); /* Ajusta o posicionamento vertical */
+    transform: translate(10px, -50%);
     transition: opacity 0.3s ease, transform 0.3s ease;
     z-index: 1000;
 }
@@ -122,7 +121,7 @@
     border-radius: 6px;
     cursor: pointer;
     transition: background-color 0.2s ease;
-    overflow: hidden; /* Garante que o conteúdo não estoure */
+    overflow: hidden;
 }
 
 .user-profile-trigger:hover {
@@ -142,17 +141,17 @@
     white-space: nowrap;
     overflow: hidden;
     text-overflow: ellipsis;
-    min-width: 0; /* Permite que o nome seja cortado em layouts flex */
+    min-width: 0;
 }
 
 /* O DROPDOWN DO USUÁRIO */
 .user-dropdown-menu {
     display: none;
     position: absolute;
-    bottom: calc(100% + 5px); /* Posiciona acima com um pequeno espaço */
+    bottom: calc(100% + 5px);
     left: 10px;
     width: calc(100% - 20px);
-    background-color: #2c3e50; /* Cor escura para destaque */
+    background-color: #2c3e50;
     border-radius: 6px;
     box-shadow: 0 4px 12px rgba(0,0,0,0.15);
     z-index: 10;
