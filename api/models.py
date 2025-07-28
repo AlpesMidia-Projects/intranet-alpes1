@@ -84,3 +84,25 @@ class OpcaoEnquete(models.Model):
 
     def __str__(self):
         return f"{self.enquete.pergunta} - {self.texto_opcao}"
+    
+class Equipamento(models.Model):
+    TIPO_CHOICES = [
+        ('NOTEBOOK', 'Notebook'),
+        ('DESKTOP', 'Desktop'),
+        ('MONITOR', 'Monitor'),
+        ('CELULAR', 'Celular'),
+        ('OUTRO', 'Outro'),
+    ]
+    
+    nome = models.CharField(max_length=100, verbose_name="Nome do Equipamento")
+    tipo = models.CharField(max_length=50, choices=TIPO_CHOICES)
+    numero_de_serie = models.CharField(max_length=100, unique=True, blank=True, null=True)
+    data_de_aquisicao = models.DateField()
+    responsavel = models.ForeignKey(Funcionario, on_delete=models.SET_NULL, null=True, blank=True, related_name='equipamentos')
+
+    def __str__(self):
+        return f"{self.nome} ({self.numero_de_serie or 'S/N'})"
+
+    class Meta:
+        verbose_name = "Equipamento"
+        verbose_name_plural = "Equipamentos"

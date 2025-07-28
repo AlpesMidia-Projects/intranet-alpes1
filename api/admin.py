@@ -1,5 +1,5 @@
 from django.contrib import admin
-from .models import Funcionario, Projeto, Noticia, Enquete, OpcaoEnquete
+from .models import Funcionario, Projeto, Noticia, Enquete, OpcaoEnquete, Equipamento
 
 # Customização para o painel de Funcionários
 @admin.register(Funcionario)
@@ -35,11 +35,8 @@ class EnqueteAdmin(admin.ModelAdmin):
     list_filter = ('ativa',)
     inlines = [OpcaoEnqueteInline] # Adiciona as opções na mesma tela
 
-# Se você não quiser as customizações e preferir o modo simples,
-# você poderia apagar tudo acima (exceto o import) e usar:
-#
-# admin.site.register(Funcionario)
-# admin.site.register(Projeto)
-# admin.site.register(Noticia)
-# admin.site.register(Enquete)
-# admin.site.register(OpcaoEnquete)
+@admin.register(Equipamento)
+class EquipamentoAdmin(admin.ModelAdmin):
+    list_display = ('nome', 'tipo', 'numero_de_serie', 'responsavel', 'data_de_aquisicao')
+    list_filter = ('tipo', 'responsavel')
+    search_fields = ('nome', 'numero_de_serie', 'responsavel__nome')
