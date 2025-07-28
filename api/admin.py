@@ -4,9 +4,9 @@ from .models import Funcionario, Projeto, Noticia, Enquete, OpcaoEnquete, Equipa
 # Customização para o painel de Funcionários
 @admin.register(Funcionario)
 class FuncionarioAdmin(admin.ModelAdmin):
-    list_display = ('nome', 'cargo', 'email', 'aniversario')
-    search_fields = ('nome', 'email', 'cargo')
-    list_filter = ('cargo',)
+    list_display = ('nome','email', 'aniversario')
+    search_fields = ('nome', 'email')
+    list_filter = ('departamento',)
 
 # Customização para o painel de Projetos
 @admin.register(Projeto)

@@ -2,25 +2,25 @@ from django.db import models
 from django.contrib.auth.models import User 
 from django.utils import timezone
 
-# Modelo para os Funcionários
 class Funcionario(models.Model):
+    # O campo 'id' automático do Django volta a ser a chave primária.
+    
+    # A ligação com o login agora é opcional.
+    user = models.OneToOneField(User, on_delete=models.SET_NULL, null=True, blank=True)
+    
     nome = models.CharField(max_length=100)
-    cargo = models.CharField(max_length=100, blank=True, null=True)
     email = models.EmailField(unique=True)
-    aniversario = models.DateField()
-    imagem_url = models.URLField(max_length=200, blank=True, null=True, help_text="URL da imagem de perfil do funcionário.")
+    aniversario = models.DateField(null=True, blank=True)
+    imagem_url = models.URLField(max_length=200, blank=True, null=True)
     departamento = models.CharField(max_length=100, blank=True, null=True)
     telefone = models.CharField(max_length=20, blank=True, null=True)
 
     def __str__(self):
         return self.nome
 
-    # Propriedade para pegar o mês de aniversário facilmente
-    @property
-    def mes_aniversario(self):
-        return self.aniversario.month
-
     class Meta:
+        # Usamos a tabela que o Django já criou.
+        db_table = 'api_funcionario'
         verbose_name = "Funcionário"
         verbose_name_plural = "Funcionários"
 
@@ -39,9 +39,6 @@ class Projeto(models.Model):
     class Meta:
         verbose_name = "Projeto"
         verbose_name_plural = "Projetos"
-
-
-# --- Modelos para o Futuro ---
 
 # Modelo para Notícias
 class Noticia(models.Model):
