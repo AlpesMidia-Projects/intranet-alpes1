@@ -1,11 +1,14 @@
-# serializers.py
+# api/serializers.py
+
 from rest_framework import serializers
-from .models import Funcionario, Projeto, Noticia, Enquete, OpcaoEnquete
+# ADICIONE O 'Equipamento' NA LINHA DE IMPORTAÇÃO
+from .models import Funcionario, Projeto, Noticia, Enquete, OpcaoEnquete, Equipamento
 
 class FuncionarioSerializer(serializers.ModelSerializer):
     class Meta:
         model = Funcionario
-        fields = ['id', 'nome', 'email', 'aniversario', 'imagem_url', 'setor', 'telefone'] 
+        # Garanta que todos os campos que você precisa estão aqui
+        fields = ['id', 'nome', 'email', 'aniversario', 'imagem_url', 'setor', 'telefone']
 
 class ProjetoSerializer(serializers.ModelSerializer):
     class Meta:
@@ -25,7 +28,30 @@ class OpcaoEnqueteSerializer(serializers.ModelSerializer):
 
 class EnqueteSerializer(serializers.ModelSerializer):
     opcoes = OpcaoEnqueteSerializer(many=True, read_only=True)
-
     class Meta:
         model = Enquete
         fields = ['id', 'pergunta', 'opcoes']
+
+# --- ADICIONE ESTE NOVO BLOCO DE CÓDIGO ---
+class EquipamentoSerializer(serializers.ModelSerializer):
+    # Usamos um SerializerMethodField para adicionar lógica customizada
+    responsavel_nome = serializers.SerializerMethodField()
+
+    class Meta:
+        model = Equipamento
+        # Lista de campos que a API vai retornar
+        fields = [
+            'id', 
+            'nome', 
+            'tipo', 
+            'numero_de_serie', 
+            'data_de_aquisicao', 
+            'responsavel', 
+            'responsavel_nome' # Nosso campo customizado
+        ]
+
+    def get_responsavel_nome(self, obj):
+        # 'obj' aqui é a instância do Equipamento
+        if obj.responsavel:
+            return obj.responsavel.nome
+        return "Sem responsável" # Retorna um texto padrão se não houver responsável
