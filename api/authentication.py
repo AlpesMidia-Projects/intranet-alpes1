@@ -1,17 +1,17 @@
 # Em api/authentication.py
 
+import jwt
+import os
+from jwt import PyJWKClient
 from rest_framework.authentication import BaseAuthentication
 from rest_framework.exceptions import AuthenticationFailed
 from django.contrib.auth.models import User
-from api.utils import supabase_backend_client # Vamos criar este arquivo a seguir
-import jwt
-
-# Pegamos o segredo JWT das variáveis de ambiente
-import os
 from dotenv import load_dotenv
-load_dotenv()
-SUPABASE_JWT_SECRET = os.getenv("SUPABASE_JWT_SECRET")
 
+load_dotenv()
+
+# Pega a URL do JWKS das variáveis de ambiente
+SUPABASE_JWKS_URL = os.getenv("SUPABASE_JWKS_URL")
 
 class SupabaseAuthentication(BaseAuthentication):
     def authenticate(self, request):
@@ -21,46 +21,38 @@ class SupabaseAuthentication(BaseAuthentication):
 
         token = auth_header.split(' ')[1]
         
+        if not SUPABASE_JWKS_URL:
+            raise AuthenticationFailed('Configuração do servidor incompleta: SUPABASE_JWKS_URL não definida.')
+
         try:
-            # Decodifica o token usando o segredo JWT para verificar a assinatura
+            # Cria um cliente que sabe como buscar a chave pública
+            jwks_client = PyJWKClient(SUPABASE_JWKS_URL)
+            # Pede ao cliente para encontrar a chave correta para este token
+            signing_key = jwks_client.get_signing_key_from_jwt(token)
+
+            # Decodifica o token usando a chave pública encontrada
             decoded_token = jwt.decode(
-                token, 
-                SUPABASE_JWT_SECRET, 
-                algorithms=["HS256"],
-                audience="authenticated"
+                token,
+                signing_key.key,
+                algorithms=["RS256"], # Usa o algoritmo correto
+                audience="authenticated",
+                options={"verify_exp": True}
             )
-            
-            # Pega o email do usuário de dentro do token decodificado
+
             user_email = decoded_token.get('email')
             if not user_email:
                 raise AuthenticationFailed('Token inválido: email não encontrado.')
 
             # Procura ou cria um usuário no Django com base no email
-            user, created = User.objects.get_or_create(
+            user, _ = User.objects.get_or_create(
                 username=user_email,
                 defaults={'email': user_email}
             )
-
-            # Se o usuário foi criado agora, podemos preencher com mais dados
-            if created:
-                user_metadata = decoded_token.get('user_metadata', {})
-                user.first_name = user_metadata.get('full_name', '').split(' ')[0]
-                user.save()
-            
             return (user, None)
 
         except jwt.ExpiredSignatureError:
             raise AuthenticationFailed('Token expirado.')
         except jwt.InvalidTokenError as e:
-            raise AuthenticationFailed(f'Token inválido: {e}')
+            raise AuthenticationFailed(f'Token JWT inválido: {e}')
         except Exception as e:
-            # Pega o usuário do Supabase para verificar se o token é válido
-            try:
-                if supabase_backend_client:
-                    supabase_user = supabase_backend_client.auth.get_user(token)
-                    user, _ = User.objects.get_or_create(username=supabase_user.user.email, defaults={'email': supabase_user.user.email})
-                    return (user, None)
-                else:
-                    raise AuthenticationFailed('Cliente Supabase não inicializado.')
-            except Exception as supabase_error:
-                raise AuthenticationFailed(f'Erro de autenticação com Supabase: {supabase_error}')
+            raise AuthenticationFailed(f'Erro inesperado na autenticação: {e}')
