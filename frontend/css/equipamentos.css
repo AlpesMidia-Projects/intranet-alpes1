@@ -1,0 +1,31 @@
+/* css/equipamentos.css */
+
+.tabela-container {
+    background-color: var(--cor-surface);
+    border-radius: 8px;
+    padding: 20px;
+    box-shadow: var(--sombra-card);
+    overflow-x: auto; /* Garante que a tabela seja responsiva em telas pequenas */
+}
+
+#tabela-equipamentos {
+    width: 100%;
+    border-collapse: collapse; /* Remove o espaçamento duplo entre as bordas */
+}
+
+#tabela-equipamentos th,
+#tabela-equipamentos td {
+    padding: 12px 15px;
+    text-align: left;
+    border-bottom: 1px solid var(--cor-borda-suave);
+}
+
+#tabela-equipamentos thead th {
+    background-color: var(--cor-fundo);
+    font-weight: bold;
+    color: var(--cor-texto-principal);
+}
+
+#tabela-equipamentos tbody tr:hover {
+    background-color: var(--cor-fundo-hover);
+}

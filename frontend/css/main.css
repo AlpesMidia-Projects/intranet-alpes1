@@ -33,4 +33,5 @@
 @import url('sidebar.css');
 /*Importação dos estilos do HTML Aniversariantes */
 @import url('aniversariantes-page.css');
-
+/*Importação dos estilos do Equipamentos*/
+@import url('equipamentos.css');

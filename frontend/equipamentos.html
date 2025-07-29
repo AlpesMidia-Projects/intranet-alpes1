@@ -1,0 +1,49 @@
+<!DOCTYPE html>
+<html lang="pt-BR" class="scheme_original">
+<head>
+  <title>Meus Equipamentos - Intranet Grupo Alpes</title>
+  <meta charset="UTF-8"/>
+  <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+
+  <script type="module" src="/js/auth-guard.js"></script>
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.2/css/all.min.css" />
+  <link rel="stylesheet" href="css/layout.css">
+  <link rel="stylesheet" href="css/sidebar.css">
+  <link rel="stylesheet" href="css/equipamentos.css"> </head>
+<body>
+
+  <div id="header-placeholder"></div>
+
+  <div class="intranet-container">
+    <div id="sidebar-placeholder"></div>
+
+    <main class="coluna-conteudo">
+      <div class="faixa-titulo">
+        <h2>Meus Equipamentos</h2>
+      </div>
+
+      <div class="tabela-container">
+        <table id="tabela-equipamentos">
+          <thead>
+            <tr>
+              <th>Nome do Equipamento</th>
+              <th>Tipo</th>
+              <th>Número de Série</th>
+              <th>Responsável</th>
+            </tr>
+          </thead>
+          <tbody id="equipamentos-tbody">
+            <tr><td colspan="4">Carregando equipamentos...</td></tr>
+          </tbody>
+        </table>
+      </div>
+    </main>
+    
+    <div id="widgets-placeholder"></div>
+  </div>
+
+  <div id="footer-placeholder"></div>
+  
+  <script type="module" src="/js/template-loader.js"></script>
+  <script type="module" src="/js/equipamentos.js"></script> </body>
+</html>
