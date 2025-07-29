@@ -18,4 +18,5 @@ urlpatterns = [
     path('noticias-recentes/', views.get_noticias_recentes, name='api-noticias-recentes'),
     path('enquete-ativa/', views.get_enquete_ativa, name='api-enquete-ativa'),
     path('opcoes/<int:pk>/votar/', views.votar_enquete, name='api-votar-enquete'),
+    path('equipamentos/', views.get_equipamentos, name='api-equipamentos'),
 ]

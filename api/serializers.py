@@ -32,14 +32,11 @@ class EnqueteSerializer(serializers.ModelSerializer):
         model = Enquete
         fields = ['id', 'pergunta', 'opcoes']
 
-# --- ADICIONE ESTE NOVO BLOCO DE CÓDIGO ---
 class EquipamentoSerializer(serializers.ModelSerializer):
-    # Usamos um SerializerMethodField para adicionar lógica customizada
     responsavel_nome = serializers.SerializerMethodField()
 
     class Meta:
         model = Equipamento
-        # Lista de campos que a API vai retornar
         fields = [
             'id', 
             'nome', 
@@ -47,11 +44,10 @@ class EquipamentoSerializer(serializers.ModelSerializer):
             'numero_de_serie', 
             'data_de_aquisicao', 
             'responsavel', 
-            'responsavel_nome' # Nosso campo customizado
+            'responsavel_nome' 
         ]
 
     def get_responsavel_nome(self, obj):
-        # 'obj' aqui é a instância do Equipamento
         if obj.responsavel:
             return obj.responsavel.nome
         return "Sem responsável" # Retorna um texto padrão se não houver responsável

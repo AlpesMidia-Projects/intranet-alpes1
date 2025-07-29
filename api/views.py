@@ -4,6 +4,8 @@ from django.utils import timezone
 import os
 import json
 import uuid 
+from .models import Equipamento
+from .serializers import EquipamentoSerializer
 from django.http import JsonResponse, HttpResponse
 from django.views.decorators.http import require_POST
 from django.views.decorators.csrf import csrf_exempt
@@ -268,3 +270,27 @@ def votar_enquete(request, pk):
     
     # Retorna uma mensagem de sucesso
     return Response({'status': 'voto computado'})
+
+@api_view(['GET'])
+def get_equipamentos(request):
+    user = request.user
+    
+    # Se o usuário não estiver logado, não retorna nada
+    if not user.is_authenticated:
+        return Response([], status=401)
+
+    # Verifica se o usuário pertence ao grupo 'Gerentes'
+    if user.groups.filter(name='Gerentes').exists():
+        # Se for gerente, retorna TODOS os equipamentos
+        equipamentos = Equipamento.objects.all()
+    else:
+        # Se for um usuário normal, retorna apenas os equipamentos atrelados a ele
+        try:
+            # Acessa o funcionário ligado ao usuário e filtra os equipamentos
+            equipamentos = Equipamento.objects.filter(responsavel__user=user)
+        except Exception:
+            # Caso o usuário não esteja ligado a nenhum funcionário ou haja erro
+            equipamentos = Equipamento.objects.none()
+
+    serializer = EquipamentoSerializer(equipamentos, many=True)
+    return Response(serializer.data)
