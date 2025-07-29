@@ -3,16 +3,12 @@ from django.contrib.auth.models import User
 from django.utils import timezone
 
 class Funcionario(models.Model):
-    # O campo 'id' automático do Django volta a ser a chave primária.
-    
-    # A ligação com o login agora é opcional.
     user = models.OneToOneField(User, on_delete=models.SET_NULL, null=True, blank=True)
-    
     nome = models.CharField(max_length=100)
     email = models.EmailField(unique=True)
     aniversario = models.DateField(null=True, blank=True)
     imagem_url = models.URLField(max_length=200, blank=True, null=True)
-    departamento = models.CharField(max_length=100, blank=True, null=True)
+    setor = models.CharField(max_length=100, blank=True, null=True)
     telefone = models.CharField(max_length=20, blank=True, null=True)
 
     def __str__(self):

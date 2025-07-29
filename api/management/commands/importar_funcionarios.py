@@ -17,8 +17,9 @@ class Command(BaseCommand):
 
         emails_existentes = set(Funcionario.objects.values_list('email', flat=True))
 
-        with open(caminho_arquivo, 'r', encoding='utf-8') as file:
-            reader = csv.DictReader(file)
+        with open(caminho_arquivo, 'r', encoding='utf-8-sig') as file:
+            reader = csv.DictReader(file) # O delimitador de vírgula é o padrão
+            
             for i, row in enumerate(reader, 1):
                 email = row.get('email')
 
@@ -36,13 +37,13 @@ class Command(BaseCommand):
                         data_completa_str = f"{aniversario_str}/2000"
                         data_aniversario = datetime.strptime(data_completa_str, '%d/%m/%Y').date()
                     except ValueError:
-                        self.stdout.write(self.style.ERROR(f"Linha {i}: Formato de aniversário inválido para '{email}'. Deve ser DD/MM. Aniversário será deixado em branco."))
+                        self.stdout.write(self.style.ERROR(f"Linha {i}: Formato de aniversário inválido."))
                 
                 Funcionario.objects.create(
                     nome=row.get('nome'),
                     email=email,
                     aniversario=data_aniversario,
-                    departamento=row.get('departamento'),
+                    setor=row.get('setor'),
                     telefone=row.get('telefone'),
                     imagem_url=row.get('imagem_url')
                 )

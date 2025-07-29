@@ -5,7 +5,7 @@ from .models import Funcionario, Projeto, Noticia, Enquete, OpcaoEnquete
 class FuncionarioSerializer(serializers.ModelSerializer):
     class Meta:
         model = Funcionario
-        fields = ['id', 'nome', 'cargo', 'email', 'aniversario', 'imagem_url', 'departamento', 'telefone'] 
+        fields = ['id', 'nome', 'email', 'aniversario', 'imagem_url', 'setor', 'telefone'] 
 
 class ProjetoSerializer(serializers.ModelSerializer):
     class Meta:
