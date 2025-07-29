@@ -1,15 +1,29 @@
 // js/equipamentos.js
 import { API_BASE_URL } from './config.js';
+import { supabase } from './supabaseClient.js'; // <-- 1. Importe o Supabase
 
 async function carregarEquipamentos() {
     const tbody = document.getElementById('equipamentos-tbody');
     if (!tbody) return;
 
     try {
-        const response = await fetch(`${API_BASE_URL}/api/equipamentos/`);
+        // 2. Pega a sessão atual do usuário para obter o token
+        const { data: { session } } = await supabase.auth.getSession();
+
+        if (!session) {
+            tbody.innerHTML = '<tr><td colspan="4">Acesso negado. Por favor, faça o login.</td></tr>';
+            return;
+        }
+
+        // 3. Adiciona o cabeçalho de 'Authorization' na chamada fetch
+        const response = await fetch(`${API_BASE_URL}/api/equipamentos/`, {
+            headers: {
+                'Authorization': `Bearer ${session.access_token}`
+            }
+        });
 
         if (response.status === 401) {
-             tbody.innerHTML = '<tr><td colspan="4">Acesso negado. Por favor, faça o login.</td></tr>';
+             tbody.innerHTML = '<tr><td colspan="4">Acesso negado. Você não tem permissão para ver estes dados.</td></tr>';
              return;
         }
         if (!response.ok) {
@@ -20,7 +34,7 @@ async function carregarEquipamentos() {
 
         tbody.innerHTML = '';
         if (equipamentos.length === 0) {
-            tbody.innerHTML = '<tr><td colspan="4">Nenhum equipamento encontrado.</td></tr>';
+            tbody.innerHTML = '<tr><td colspan="4">Nenhum equipamento encontrado para você.</td></tr>';
             return;
         }
 
